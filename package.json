@@ -1,0 +1,47 @@
+{
+  "name": "jason-breedlove-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.19.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "node --import tsx scripts/dev.ts",
+    "dev:client": "vite --host 127.0.0.1",
+    "dev:server": "node --env-file-if-exists=.env --import tsx --watch server/index.ts",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.server.json --noEmit",
+    "format": "prettier --write src server scripts shared *.json *.ts *.yaml",
+    "build": "pnpm typecheck && vite build && tsc -p tsconfig.server.json && node dist-server/scripts/copy-schema.js",
+    "start": "node --env-file-if-exists=.env dist-server/server/index.js",
+    "test": "node --import tsx --test server/contact.test.ts",
+    "messages": "node --env-file-if-exists=.env dist-server/scripts/messages.js"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "~5.9.3",
+    "tsx": "^4.20.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/express": "^5.0.0",
+    "@types/supertest": "^6.0.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^6.4.0",
+    "supertest": "^7.1.0"
+  }
+}

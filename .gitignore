@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-server/
+.env
+data/
+.sites-runtime/
+.pnpm-store/
+output/
+*.log
+.DS_Store
