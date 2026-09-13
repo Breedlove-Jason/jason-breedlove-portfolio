@@ -48,4 +48,6 @@ Reviewed September 11, 2026. Repository documents were used as factual source ma
 
 The React, Next.js, TypeScript, React Native, Express, PostgreSQL, MongoDB, Docker, and Git additions are supported by the inspected repositories. Resume-listed Python, Java, JavaScript, React, Flask, C#, SQL, HTML/CSS, Linux distributions, and ethical-hacking knowledge are retained.
 
+The “Connected by Curiosity” globe includes TypeScript, JavaScript, Python, Java, C#, SQL, Swift, and Kotlin as languages worked with or studied. Swift and Kotlin reflect MemoryBeam’s native mobile source. The list does not assign proficiency ratings or imply equal experience across languages; React, HTML/CSS, Linux, and security concepts remain in the technical-focus captions.
+
 The AI-assisted workflow statement is drawn from the existing local portfolio’s `src/data/workflow.ts`. It describes review and ownership, without claiming sole manual authorship of every line in AI-assisted projects.

@@ -558,25 +558,13 @@
     color: var(--gold);
   }
   .graph-label {
-    @apply absolute;
+    @apply absolute whitespace-nowrap uppercase;
     font: 12px var(--display);
     letter-spacing: 1.5px;
     color: #aabfcd;
     padding: 7px 9px;
     background: #0c131dcc;
     border: 1px solid #314453;
-  }
-  .label-react {
-    left: 15%;
-    top: 19%;
-  }
-  .label-python {
-    right: 1%;
-    top: 54%;
-  }
-  .label-linux {
-    left: 9%;
-    bottom: 17%;
   }
   .domain-selector {
     @apply flex;

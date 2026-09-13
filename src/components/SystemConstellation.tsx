@@ -1,15 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pause, Play } from 'lucide-react';
 
+const languages = [
+  { name: 'TypeScript', position: 'top-[4%] left-1/2 -translate-x-1/2' },
+  { name: 'JavaScript', position: 'top-[23%] right-0' },
+  { name: 'Python', position: 'top-[48%] right-0' },
+  { name: 'Java', position: 'top-[73%] right-[6%]' },
+  { name: 'C#', position: 'bottom-[2%] left-1/2 -translate-x-1/2' },
+  { name: 'SQL', position: 'top-[73%] left-[6%]' },
+  { name: 'Swift', position: 'top-[48%] left-0' },
+  { name: 'Kotlin', position: 'top-[23%] left-0' },
+] as const;
+
 const domains = [
   {
     name: 'Interfaces',
-    caption: 'React · TypeScript · React Native',
+    caption: 'React · React Native · HTML5 · CSS3',
     color: [120, 229, 239],
   },
   {
     name: 'Systems',
-    caption: 'Node.js · Python · SQL',
+    caption: 'Node.js · Python · Java · C# · SQL',
     color: [161, 157, 255],
   },
   {
@@ -147,9 +158,19 @@ export default function SystemConstellation() {
         <span className="constellation-core" aria-hidden="true">
           jb<span>.</span>
         </span>
-        <span className="graph-label label-react">REACT</span>
-        <span className="graph-label label-python">PYTHON</span>
-        <span className="graph-label label-linux">LINUX</span>
+        <ul
+          className="absolute inset-0 m-0 list-none p-0"
+          aria-label="Programming languages I have worked with or studied"
+        >
+          {languages.map((language) => (
+            <li
+              key={language.name}
+              className={`graph-label ${language.position}`}
+            >
+              {language.name}
+            </li>
+          ))}
+        </ul>
       </div>
       <div
         className="domain-selector"
