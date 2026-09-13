@@ -1,0 +1,79 @@
+// Descriptions are grounded in repository files and the existing portfolio.
+// Source visibility was checked on September 11, 2026. See docs/CONTENT_SOURCES.md.
+export interface Project {
+  id: string;
+  number: string;
+  title: string;
+  category: 'Mobile & systems' | 'Full stack' | 'Python & data' | 'Developer tools';
+  kind: string;
+  status: 'In development' | 'Research prototype' | 'Public source';
+  featured?: boolean;
+  headline: string;
+  description: string;
+  stack: string[];
+  problem: string;
+  implementation: string;
+  boundary: string;
+  diagram: string[];
+  source?: string;
+}
+
+export const projects: Project[] = [
+  {
+    id: 'memorybeam', number: '01', title: 'MemoryBeam', category: 'Mobile & systems',
+    kind: 'MOBILE + EMBEDDED SYSTEMS', status: 'In development', featured: true,
+    headline: 'From a moment on your phone to a memory you can hold.',
+    description: 'A cross-platform recording and editing experience, connected to a physical keepsake through a carefully designed local transfer protocol.',
+    stack: ['React Native', 'TypeScript', 'Expo', 'Swift', 'Kotlin', 'SQLite'],
+    problem: 'Preserve a finished video and deliver it reliably to a dedicated device, even when a local connection is interrupted.',
+    implementation: 'The app combines guided capture, a teleprompter, non-destructive editing, and finished MP4 masters. The iOS delivery client uses QR pairing, certificate-pinned HTTPS, resumable chunks, and SHA-256 verification before recording a delivery receipt.',
+    boundary: 'The iOS transfer client is implemented. Android native delivery and complete physical-device interoperability remain in development. MemoryBeam OS “First Light” is a separate development foundation.',
+    diagram: ['Capture', 'Edit', 'Pair securely', 'Verify & deliver'],
+  },
+  {
+    id: 'legion', number: '02', title: 'American Legion Post 84', category: 'Full stack',
+    kind: 'FULL-STACK OPERATIONS PLATFORM', status: 'In development',
+    headline: 'Software in service of a community.',
+    description: 'A unified admin platform for member records, content, events, dues, donations, and payment workflows.',
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Stripe'],
+    problem: 'Bring the everyday administration of a veterans’ organization into a coherent set of digital workflows.',
+    implementation: 'The project includes responsive CMS and admin modules, member and officer management, Stripe checkout and webhook flows, payment tracking, and notification infrastructure. Prisma provides the data layer over PostgreSQL.',
+    boundary: 'An active development project. Production adoption and organization-wide rollout are not claimed.',
+    diagram: ['Admin UI', 'Server routes', 'Prisma', 'PostgreSQL'],
+  },
+  {
+    id: 'cryptoforge', number: '03', title: 'CryptoForge', category: 'Python & data',
+    kind: 'MACHINE LEARNING + DATA ENGINEERING', status: 'Research prototype',
+    headline: 'Research that can be reproduced.',
+    description: 'A modular market research framework for data ingestion, feature engineering, calibrated classifiers, and walk-forward evaluation.',
+    stack: ['Python', 'pandas', 'LightGBM', 'XGBoost', 'scikit-learn'],
+    problem: 'Evaluate market models against chronological data, explicit costs, and reproducible inputs instead of relying on isolated headline metrics.',
+    implementation: 'Provider-oriented data adapters normalize market records, partition datasets, and write SHA-256 manifests. The research pipeline supports probability calibration, chronological walk-forward splits, parameter sweeps, fixture-backed runs, and bounded provider retries.',
+    boundary: 'Research, paper, and shadow workflows. The data layer is read-only and does not place live orders. No profitability or predictive-performance claim is made.',
+    diagram: ['Market data', 'Features', 'Model zoo', 'Walk-forward'],
+  },
+  {
+    id: 'envranger', number: '04', title: 'Envranger', category: 'Developer tools',
+    kind: 'TYPESCRIPT DEVELOPER TOOLING', status: 'Public source',
+    headline: 'Make configuration explain itself.',
+    description: 'A CLI and terminal interface for scanning, validating, and managing environment configuration across JavaScript and TypeScript projects.',
+    stack: ['TypeScript', 'Node.js', 'Commander', 'React Ink'],
+    problem: 'Keep application configuration, environment examples, and developer expectations aligned as a codebase grows.',
+    implementation: 'The project documents source scanning for process.env references, configuration checks, type generation, example synchronization, linting, presets, and a terminal wizard. The implementation uses Commander and Ink.',
+    boundary: 'An early public project, version 0.1.0. Source is available on GitHub; npm publication is not asserted.',
+    diagram: ['Scan source', 'Validate keys', 'Generate types', 'Sync example'],
+    source: 'https://github.com/Breedlove-Jason/envranger',
+  },
+  {
+    id: 'productstore', number: '05', title: 'MERN Product Store', category: 'Full stack',
+    kind: 'REACT + EXPRESS + MONGODB', status: 'Public source',
+    headline: 'A complete path from interface to database.',
+    description: 'A full-stack product management application with a Vite-powered React frontend and an Express API backed by MongoDB.',
+    stack: ['React', 'Vite', 'Express', 'MongoDB', 'Docker'],
+    problem: 'Connect product management in the browser to a persistent backend with a straightforward deployment model.',
+    implementation: 'The repository separates the React client from the Node and Express API. MongoDB supplies storage, with Docker Compose and Nginx deployment instructions alongside the source.',
+    boundary: 'A public full-stack practice project. Repository documentation includes deployment guidance; live hosting has not been verified.',
+    diagram: ['React', 'Express API', 'MongoDB', 'Docker'],
+    source: 'https://github.com/Breedlove-Jason/productStore-MERN',
+  },
+];
