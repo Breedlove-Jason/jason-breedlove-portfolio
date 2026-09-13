@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pause, Play } from 'lucide-react';
 
-const languages = [
+const technologies = [
   { name: 'TypeScript', position: 'top-[4%] left-1/2 -translate-x-1/2' },
   { name: 'JavaScript', position: 'top-[23%] right-0' },
   { name: 'Python', position: 'top-[48%] right-0' },
   { name: 'Java', position: 'top-[73%] right-[6%]' },
-  { name: 'C#', position: 'bottom-[2%] left-1/2 -translate-x-1/2' },
+  { name: 'Flask', position: 'bottom-[2%] right-[12%]' },
+  { name: 'Django', position: 'bottom-[2%] left-[12%]' },
   { name: 'SQL', position: 'top-[73%] left-[6%]' },
-  { name: 'Swift', position: 'top-[48%] left-0' },
-  { name: 'Kotlin', position: 'top-[23%] left-0' },
+  { name: 'MongoDB', position: 'top-[48%] left-0' },
+  { name: 'React', position: 'top-[23%] left-0' },
 ] as const;
 
 const domains = [
@@ -20,7 +21,7 @@ const domains = [
   },
   {
     name: 'Systems',
-    caption: 'Node.js · Python · Java · C# · SQL',
+    caption: 'Node.js · Flask · Django · MongoDB · SQL',
     color: [161, 157, 255],
   },
   {
@@ -160,14 +161,14 @@ export default function SystemConstellation() {
         </span>
         <ul
           className="absolute inset-0 m-0 list-none p-0"
-          aria-label="Programming languages I have worked with or studied"
+          aria-label="Languages, frameworks, and databases I have worked with or studied"
         >
-          {languages.map((language) => (
+          {technologies.map((technology) => (
             <li
-              key={language.name}
-              className={`graph-label ${language.position}`}
+              key={technology.name}
+              className={`graph-label ${technology.position}`}
             >
-              {language.name}
+              {technology.name}
             </li>
           ))}
         </ul>
