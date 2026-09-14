@@ -124,9 +124,9 @@ export default function Contact() {
           </p>
           <a
             className="contact-email"
-            href="mailto:jbreedlove@jasonbreedlove.dev"
+            href="mailto:jason@jasonbreedlove.dev"
           >
-            jbreedlove@jasonbreedlove.dev{' '}
+            jason@jasonbreedlove.dev{' '}
             <ArrowUpRight size={20} aria-hidden="true" />
           </a>
           <div className="contact-facts">
