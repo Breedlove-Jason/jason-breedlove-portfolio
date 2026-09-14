@@ -104,7 +104,7 @@ export function createApp({
       next();
     },
     express.json({ limit: '24kb' }),
-    (req, res, next) => {
+    async (req, res, next) => {
       const parsed = contactSchema.safeParse(req.body);
       if (!parsed.success) {
         const fields: Record<string, string> = {};
@@ -121,7 +121,7 @@ export function createApp({
           .status(200)
           .json({ message: 'Message received. Thank you for reaching out.' });
       try {
-        const id = store.save(parsed.data);
+        const id = await store.save(parsed.data);
         return res.status(201).json({
           id,
           message: 'Message received. Thank you for reaching out.',

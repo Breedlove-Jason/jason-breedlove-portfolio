@@ -1,5 +1,5 @@
 import { createApp } from './app.js';
-import { createStore } from './store.js';
+import { createMongoStore } from './mongo-store.js';
 
 process.umask(0o077);
 const production = process.env.NODE_ENV === 'production';
@@ -17,7 +17,7 @@ if (!Number.isInteger(trustProxyHops) || trustProxyHops < 0)
   throw new Error('TRUST_PROXY_HOPS must be a non-negative integer.');
 if (!Number.isInteger(port) || port < 1 || port > 65535)
   throw new Error('PORT must be between 1 and 65535.');
-const store = createStore(process.env.CONTACT_DB_PATH);
+const store = await createMongoStore();
 const app = createApp({ store, production, allowedOrigins, trustProxyHops });
 const host = process.env.HOST || '127.0.0.1';
 const server = app.listen(port, host, () =>
@@ -28,8 +28,10 @@ function shutdown() {
   if (closing) return;
   closing = true;
   server.close(() => {
-    store.close();
-    process.exit(0);
+    store.close().then(
+      () => process.exit(0),
+      () => process.exit(1),
+    );
   });
   setTimeout(() => process.exit(1), 5000).unref();
 }
