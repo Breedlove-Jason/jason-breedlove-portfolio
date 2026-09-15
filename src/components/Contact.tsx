@@ -136,11 +136,7 @@ export default function Contact() {
             </a>
             <address>
               <MapPin size={17} aria-hidden="true" />
-              <span>
-                1260 Harmony Lane
-                <br />
-                Auburn, CA 95603
-              </span>
+              <span>Auburn, California</span>
             </address>
             <a
               href="https://github.com/Breedlove-Jason"
