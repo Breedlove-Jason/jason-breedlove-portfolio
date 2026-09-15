@@ -102,4 +102,16 @@ export const projects: Project[] = [
     diagram: ['Input', 'Movement', 'Collision', 'Score'],
     source: 'https://github.com/Breedlove-Jason/pacman-js',
   },
+  {
+    id: 'fieldnotes', number: '08', title: 'Field Notes — Flask Blog', category: 'Full stack',
+    kind: 'PYTHON + PUBLISHING', status: 'Public source',
+    headline: 'A place for ideas from the build.',
+    description: 'A Flask journal with readable project stories, accounts, comments, and an editor dashboard for publishing and managing posts.',
+    stack: ['Python', 'Flask', 'PostgreSQL', 'SQLAlchemy'],
+    problem: 'Connect a readable journal to persistent publishing workflows and explicit editorial permissions.',
+    implementation: 'Server-rendered templates, validated forms, CSRF-protected writes, filtered article HTML, plain-text comments, and an editor-only publishing desk. Eight integration tests cover the key routes and permissions.',
+    boundary: 'Includes clearly marked sample articles maintained in source. Live editorial account setup is in progress.',
+    diagram: ['Flask views', 'Forms', 'SQLAlchemy', 'PostgreSQL'],
+    source: 'https://github.com/Breedlove-Jason/flask_blog',
+  },
 ];
