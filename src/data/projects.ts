@@ -16,19 +16,20 @@ export interface Project {
   boundary: string;
   diagram: string[];
   source?: string;
+  notebook?: string;
 }
 
 export const projects: Project[] = [
   {
     id: 'memorybeam', number: '01', title: 'MemoryBeam', category: 'Mobile & systems',
-    kind: 'MOBILE + EMBEDDED SYSTEMS', status: 'In development', featured: true,
+    kind: 'MOBILE + EMBEDDED SYSTEMS', status: 'In development',
     headline: 'From a moment on your phone to a memory you can hold.',
-    description: 'A cross-platform recording and editing experience, connected to a physical keepsake through a carefully designed local transfer protocol.',
+    description: 'A cross-platform app for recording, editing, and delivering personal videos to a physical MemoryBeam keepsake.',
     stack: ['React Native', 'TypeScript', 'Expo', 'Swift', 'Kotlin', 'SQLite'],
     problem: 'Preserve a finished video and deliver it reliably to a dedicated device, even when a local connection is interrupted.',
-    implementation: 'The app combines guided capture, a teleprompter, non-destructive editing, and finished MP4 masters. The iOS delivery client uses QR pairing, certificate-pinned HTTPS, resumable chunks, and SHA-256 verification before recording a delivery receipt.',
-    boundary: 'The iOS transfer client is implemented. Android native delivery and complete physical-device interoperability remain in development. MemoryBeam OS “First Light” is a separate development foundation.',
-    diagram: ['Capture', 'Edit', 'Pair securely', 'Verify & deliver'],
+    implementation: 'The app combines guided capture, a teleprompter, non-destructive editing, and a delivery experience for finished videos.',
+    boundary: 'This showcase covers the companion app experience. Device internals and proprietary delivery implementation are not published. Complete device interoperability remains in development.',
+    diagram: ['Capture', 'Edit', 'Send', 'Enjoy'],
   },
   {
     id: 'legion', number: '02', title: 'American Legion Post 84', category: 'Full stack',
@@ -75,5 +76,18 @@ export const projects: Project[] = [
     boundary: 'A public full-stack practice project. Repository documentation includes deployment guidance; live hosting has not been verified.',
     diagram: ['React', 'Express API', 'MongoDB', 'Docker'],
     source: 'https://github.com/Breedlove-Jason/productStore-MERN',
+  },
+  {
+    id: 'reuters', number: '06', title: 'Reuters Similarity Lab', category: 'Python & data',
+    kind: 'NLP + DOCUMENT RETRIEVAL', status: 'Public source',
+    headline: 'Explore what makes two articles similar.',
+    description: 'An interactive experiment in word n-grams and Jaccard similarity across the complete Reuters-21578 collection, with 19,043 article bodies available for search.',
+    stack: ['Python', 'Jupyter', 'Google Colab', 'Matplotlib'],
+    problem: 'Find related news articles efficiently while keeping every similarity score explainable and the experiment reproducible.',
+    implementation: 'A checksum-verified downloader loads all 22 corpus files. An inverted index computes exact Jaccard rankings for unigrams, bigrams, and trigrams. The notebook includes interactive search, visual comparisons, and measured benchmarks. All 30 benchmark rankings matched exhaustive search.',
+    boundary: 'Lexical overlap, not semantic understanding or classification accuracy. Six unit tests pass; notebook cells ran locally against the full corpus. Hosted Colab and browser widget interaction await a smoke test.',
+    diagram: ['Reuters corpus', 'Word n-grams', 'Inverted index', 'Ranked matches'],
+    source: 'https://github.com/Breedlove-Jason/reuters-similarity-lab',
+    notebook: 'https://colab.research.google.com/github/Breedlove-Jason/reuters-similarity-lab/blob/master/notebooks/reuters_similarity.ipynb',
   },
 ];

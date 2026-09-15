@@ -32,6 +32,7 @@ const icons: Record<string, LucideIcon> = {
   cryptoforge: Network,
   envranger: Terminal,
   productstore: Braces,
+  reuters: Database,
 };
 
 function ProjectDetails({ project }: { project: Project }) {
@@ -153,6 +154,7 @@ export default function Projects() {
                 </h3>
                 <p className="project-headline">{project.headline}</p>
                 <p className="project-description">{project.description}</p>
+                {project.notebook && <p><a className="source-link" href={project.notebook} target="_blank" rel="noopener noreferrer">Open in Colab <ArrowUpRight size={15} aria-hidden="true" /></a></p>}
                 <div className="tech-tags" aria-label="Technology stack">
                   {project.stack.map((tech) => (
                     <span key={tech}>{tech}</span>
