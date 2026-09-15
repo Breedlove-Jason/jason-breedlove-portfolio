@@ -669,7 +669,7 @@
     @apply grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 25px;
-    @apply items-start;
+    align-items: stretch;
   }
   .project-card {
     border: 1px solid #2d3a49;
@@ -677,6 +677,24 @@
     background: linear-gradient(140deg, #16233255, #0e1722);
     @apply overflow-hidden;
     transition: border-color 0.2s;
+  }
+  .project-card:not(.project-featured) {
+    display: flex;
+    flex-direction: column;
+  }
+  .project-card:not(.project-featured) .project-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .project-card:not(.project-featured) .tech-tags {
+    margin-top: auto;
+  }
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 24px;
   }
   .project-card:hover {
     border-color: #567887;

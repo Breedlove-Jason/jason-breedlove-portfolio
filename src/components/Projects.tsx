@@ -154,7 +154,6 @@ export default function Projects() {
                 </h3>
                 <p className="project-headline">{project.headline}</p>
                 <p className="project-description">{project.description}</p>
-                {project.notebook && <p><a className="source-link" href={project.notebook} target="_blank" rel="noopener noreferrer">Open in Colab <ArrowUpRight size={15} aria-hidden="true" /></a></p>}
                 <div className="tech-tags" aria-label="Technology stack">
                   {project.stack.map((tech) => (
                     <span key={tech}>{tech}</span>
@@ -177,6 +176,7 @@ export default function Projects() {
               )}
               <div className="project-card-footer">
                 <ProjectDetails project={project} />
+                <div className="project-links">
                 {project.source ? (
                   <a
                     className="source-link"
@@ -193,6 +193,12 @@ export default function Projects() {
                     <ArrowUpRight size={15} aria-hidden="true" />
                   </a>
                 )}
+                {project.notebook && (
+                  <a className="source-link" href={project.notebook} target="_blank" rel="noopener noreferrer">
+                    Open in Colab <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                )}
+                </div>
               </div>
             </article>
           );
