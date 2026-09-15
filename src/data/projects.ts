@@ -90,4 +90,16 @@ export const projects: Project[] = [
     source: 'https://github.com/Breedlove-Jason/reuters-similarity-lab',
     notebook: 'https://colab.research.google.com/github/Breedlove-Jason/reuters-similarity-lab/blob/master/notebooks/reuters_similarity.ipynb',
   },
+  {
+    id: 'pacman', number: '07', title: 'Pacman JS', category: 'Developer tools',
+    kind: 'VANILLA JAVASCRIPT + GAMEPLAY', status: 'Public source',
+    headline: 'One more run.',
+    description: 'A browser arcade game with a responsive maze, buffered keyboard turns, touch controls, power pellets, and a local personal best.',
+    stack: ['JavaScript', 'CSS Grid', 'ES modules', 'Node.js'],
+    problem: 'Keep movement, collisions, and restarts predictable while making a classic maze playable across screen sizes.',
+    implementation: 'Preserves the original maze and CSS characters. Finite ghost movement avoids blocked loops, pellets resolve before collisions, and a single input handler survives restarts. A dependency-free build replaces the original Parcel toolchain.',
+    boundary: 'An unofficial educational tribute. Ghosts use simple randomized movement. Source and automated checks are available; public deployment and browser gameplay verification are pending.',
+    diagram: ['Input', 'Movement', 'Collision', 'Score'],
+    source: 'https://github.com/Breedlove-Jason/pacman-js',
+  },
 ];

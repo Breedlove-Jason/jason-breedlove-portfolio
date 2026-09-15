@@ -33,6 +33,7 @@ const icons: Record<string, LucideIcon> = {
   envranger: Terminal,
   productstore: Braces,
   reuters: Database,
+  pacman: Code2,
 };
 
 function ProjectDetails({ project }: { project: Project }) {
