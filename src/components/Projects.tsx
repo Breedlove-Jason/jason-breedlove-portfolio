@@ -196,6 +196,11 @@ export default function Projects() {
                     <ArrowUpRight size={15} aria-hidden="true" />
                   </a>
                 )}
+                {project.liveUrl && (
+                  <a className="source-link" href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    {project.liveLabel || 'Visit project'} <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                )}
                 {project.notebook && (
                   <a className="source-link" href={project.notebook} target="_blank" rel="noopener noreferrer">
                     Open in Colab <ArrowUpRight size={15} aria-hidden="true" />

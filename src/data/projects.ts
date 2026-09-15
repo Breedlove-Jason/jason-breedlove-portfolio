@@ -17,6 +17,8 @@ export interface Project {
   diagram: string[];
   source?: string;
   notebook?: string;
+  liveUrl?: string;
+  liveLabel?: string;
 }
 
 export const projects: Project[] = [
@@ -113,5 +115,7 @@ export const projects: Project[] = [
     boundary: 'Includes clearly marked sample articles maintained in source. Live editorial account setup is in progress.',
     diagram: ['Flask views', 'Forms', 'SQLAlchemy', 'PostgreSQL'],
     source: 'https://github.com/Breedlove-Jason/flask_blog',
+    liveUrl: 'https://flask-blog-six.vercel.app',
+    liveLabel: 'Read blog',
   },
 ];
