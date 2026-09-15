@@ -4,7 +4,7 @@ export interface Project {
   id: string;
   number: string;
   title: string;
-  category: 'Mobile & systems' | 'Full stack' | 'Python & data' | 'Developer tools';
+  category: 'Mobile & systems' | 'Full stack' | 'Python & data' | 'Developer tools' | 'Games';
   kind: string;
   status: 'In development' | 'Research prototype' | 'Public source';
   featured?: boolean;
@@ -91,7 +91,7 @@ export const projects: Project[] = [
     notebook: 'https://colab.research.google.com/github/Breedlove-Jason/reuters-similarity-lab/blob/master/notebooks/reuters_similarity.ipynb',
   },
   {
-    id: 'pacman', number: '07', title: 'Pacman JS', category: 'Developer tools',
+    id: 'pacman', number: '07', title: 'Pacman JS', category: 'Games',
     kind: 'VANILLA JAVASCRIPT + GAMEPLAY', status: 'Public source',
     headline: 'One more run.',
     description: 'A browser arcade game with a responsive maze, buffered keyboard turns, touch controls, power pellets, and a local personal best.',
