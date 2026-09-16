@@ -159,4 +159,18 @@ export const projects: Project[] = [
     liveUrl: 'https://snake.jasonbreedlove.dev',
     liveLabel: 'Play Snake',
   },
-];
+  {
+    id: 'pong', number: '12', title: 'Python Pong', category: 'The Arcade',
+    kind: 'PYTHON + WEBASSEMBLY + PHYSICS', status: 'Live demo',
+    headline: 'Keep the rally alive.',
+    description: 'A classic paddle rivalry with a Python-powered browser edition, a computer opponent, and keyboard and touch controls.',
+    stack: ['Python', 'Pyodide', 'WebAssembly', 'Canvas', 'Turtle'],
+    problem: 'Bring a desktop Python game to the browser while keeping scoring, collisions, and movement consistent.',
+    implementation: 'A shared Python engine drives desktop Turtle and browser canvas renderers. Fixed physics steps, angled rebounds, bounded opponent movement, and first-to-seven scoring support repeatable matches with pause and reset controls.',
+    boundary: 'The first visit downloads the Python runtime. Ten physics tests and a WebAssembly bridge check pass; hosted start, pause, and reset controls have been verified.',
+    diagram: ['Input', 'Python physics', 'Canvas', 'Match score'],
+    source: 'https://github.com/Breedlove-Jason/pong/tree/feat/arcade-browser',
+    liveUrl: 'https://pong.jasonbreedlove.dev',
+    liveLabel: 'Play Pong',
+  },
+]; 
