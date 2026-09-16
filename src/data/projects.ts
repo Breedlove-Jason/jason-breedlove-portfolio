@@ -6,7 +6,7 @@ export interface Project {
   title: string;
   category: 'Mobile & systems' | 'Full stack' | 'Python & data' | 'Developer tools' | 'Games';
   kind: string;
-  status: 'In development' | 'Research prototype' | 'Public source';
+  status: 'In development' | 'Research prototype' | 'Public source' | 'Live demo';
   featured?: boolean;
   headline: string;
   description: string;
@@ -115,7 +115,20 @@ export const projects: Project[] = [
     boundary: 'Includes clearly marked sample articles maintained in source. Live editorial account setup is in progress.',
     diagram: ['Flask views', 'Forms', 'SQLAlchemy', 'PostgreSQL'],
     source: 'https://github.com/Breedlove-Jason/flask_blog',
-    liveUrl: 'https://flask-blog-six.vercel.app',
+    liveUrl: 'https://blog.jasonbreedlove.dev',
     liveLabel: 'Read blog',
+  },
+  {
+    id: 'yelpcamp', number: '09', title: 'YelpCamp', category: 'Full stack',
+    kind: 'EXPRESS + MAPS + API INTEGRATION', status: 'Live demo',
+    headline: 'Find a campsite. Share the experience.',
+    description: 'A campground discovery and review app with interactive maps, Recreation.gov data, image uploads, and five-star ratings.',
+    stack: ['Node.js', 'Express', 'MongoDB', 'Bootstrap', 'Mapbox', 'Cloudinary'],
+    problem: 'Bring campground listings, location services, images, and community reviews into one usable experience.',
+    implementation: 'Server-rendered EJS and Bootstrap views connect to MongoDB, Mapbox geocoding and clustered maps, Cloudinary image storage, and server-side RIDB requests with optional Redis caching. Persistent sessions and ownership checks protect account and editing workflows.',
+    boundary: 'Inspired by C. Steele Web Development Bootcamp, with custom styling and integrations. RIDB enrichment displays a bounded sample. Source is private; the deployed app is available to explore.',
+    diagram: ['Bootstrap + EJS', 'Express', 'APIs', 'MongoDB'],
+    liveUrl: 'https://yelp-camp-mu-amber.vercel.app',
+    liveLabel: 'Explore YelpCamp',
   },
 ];
