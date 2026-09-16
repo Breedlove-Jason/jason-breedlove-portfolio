@@ -39,6 +39,7 @@ const icons: Record<string, LucideIcon> = {
   yelpcamp: Network,
   farmfresh: Braces,
   snake: Code2,
+  pong: Code2,
 };
 
 function ProjectDetails({ project }: { project: Project }) {
@@ -139,7 +140,7 @@ export default function Projects() {
       </div>
       <div className="project-grid">
         {visibleProjects.map((project) => {
-          const Icon = icons[project.id];
+          const Icon = icons[project.id] ?? Code2;
           return (
             <article
               key={project.id}
