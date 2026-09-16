@@ -182,6 +182,12 @@ export default function Projects() {
                 </div>
               )}
               <div className="project-card-footer">
+                {project.howToPlay && (
+                  <details className="project-details">
+                    <summary>How to play <ChevronDown size={17} aria-hidden="true" /></summary>
+                    <div className="project-detail-body"><p>{project.howToPlay}</p></div>
+                  </details>
+                )}
                 <ProjectDetails project={project} />
                 <div className="project-links">
                 {project.source ? (
