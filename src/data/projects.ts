@@ -19,6 +19,7 @@ export interface Project {
   notebook?: string;
   liveUrl?: string;
   liveLabel?: string;
+  howToPlay?: string;
 }
 
 export const projects: Project[] = [
@@ -93,6 +94,7 @@ export const projects: Project[] = [
     notebook: 'https://colab.research.google.com/github/Breedlove-Jason/reuters-similarity-lab/blob/master/notebooks/reuters_similarity.ipynb',
   },
   {
+    howToPlay: "Collect every dot while avoiding ghosts. Use arrow keys or WASD, or the on-screen arrows. Power pellets let you catch ghosts briefly. Space pauses the game.",
     id: 'pacman', number: '07', title: 'Pacman JS', category: 'The Arcade',
     kind: 'VANILLA JAVASCRIPT + GAMEPLAY', status: 'Public source',
     headline: 'One more run.',
@@ -146,6 +148,7 @@ export const projects: Project[] = [
     liveLabel: 'Explore the market',
   },
   {
+    howToPlay: "Eat food to grow and score. Turn with arrow keys or WASD; swipe or use the arrow buttons on mobile. Avoid the walls and your own tail. Space pauses; Restart begins a fresh run.",
     id: 'snake', number: '11', title: 'Python Snake', category: 'The Arcade',
     kind: 'PYTHON + WEBASSEMBLY + CANVAS', status: 'Live demo',
     headline: 'Small moves. Long game.',
@@ -160,6 +163,7 @@ export const projects: Project[] = [
     liveLabel: 'Play Snake',
   },
   {
+    howToPlay: "Control the left paddle with Up/Down or W/S. On mobile, drag on the court or hold the arrow buttons. Return the ball past the opponent; first to seven wins. Space pauses and R resets.",
     id: 'pong', number: '12', title: 'Python Pong', category: 'The Arcade',
     kind: 'PYTHON + WEBASSEMBLY + PHYSICS', status: 'Live demo',
     headline: 'Keep the rally alive.',
@@ -174,6 +178,7 @@ export const projects: Project[] = [
     liveLabel: 'Play Pong',
   },
   {
+    howToPlay: "Two players share one device. Roll adds to your turn score. Hold banks those points and passes the turn. Rolling a one loses only the unbanked points and passes the turn. First to bank 100 wins.",
     id: 'pig', number: '13', title: 'Pig Game', category: 'The Arcade',
     kind: 'JAVASCRIPT + TURN-BASED GAMEPLAY', status: 'Live demo',
     headline: 'Know when to hold.',
@@ -186,5 +191,20 @@ export const projects: Project[] = [
     source: 'https://github.com/Breedlove-Jason/pig',
     liveUrl: 'https://pig.jasonbreedlove.dev',
     liveLabel: 'Play Pig',
+  },
+  {
+    id: 'blackjack', number: '14', title: 'Python Blackjack', category: 'The Arcade',
+    kind: 'PYTHON + WEBASSEMBLY + CARD GAME', status: 'Live demo',
+    headline: 'A little nerve. A little intuition.',
+    description: 'An emerald-and-gold Blackjack table powered by Python, with responsive cards, dealer play, and session scores.',
+    stack: ['Python', 'Pyodide', 'WebAssembly', 'JavaScript'],
+    problem: 'Turn a desktop card game into a browser experience while preserving its Python rules and making each round predictable.',
+    implementation: 'A display-independent engine adapts the original Deck and Hand classes. Pyodide executes Python in the browser, with accessible card labels, flexible ace scoring, natural blackjack settlement, and guarded round transitions.',
+    boundary: 'Single-player, no-money play against a dealer. No splits or doubling. Thirteen rule tests, interface checks, and a real Pyodide bridge test pass; hosted gameplay is verified.',
+    diagram: ['Deal', 'Python rules', 'Hit or stand', 'Settle'],
+    howToPlay: 'Choose Deal me in. Hit takes another card; Stand keeps your total and lets the dealer play. Get closer to 21 without going over. Aces are 1 or 11, face cards are 10, and the dealer stands on all 17s. Choose Next hand after the result.',
+    source: 'https://github.com/Breedlove-Jason/blackjack',
+    liveUrl: 'https://blackjack.jasonbreedlove.dev',
+    liveLabel: 'Play Blackjack',
   },
 ];
