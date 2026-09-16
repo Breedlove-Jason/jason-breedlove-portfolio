@@ -145,4 +145,18 @@ export const projects: Project[] = [
     liveUrl: 'https://farmfresh.jasonbreedlove.dev',
     liveLabel: 'Explore the market',
   },
+  {
+    id: 'snake', number: '11', title: 'Python Snake', category: 'Games',
+    kind: 'PYTHON + WEBASSEMBLY + CANVAS', status: 'Live demo',
+    headline: 'Small moves. Long game.',
+    description: 'A responsive Snake game that runs a shared Python rules engine across desktop Turtle graphics and a browser canvas.',
+    stack: ['Python', 'Pyodide', 'WebAssembly', 'Canvas', 'Turtle'],
+    problem: 'Preserve a beginner Python game while making its rules predictable, testable, and playable across desktop and web interfaces.',
+    implementation: 'A display-independent Python engine handles movement, queued turns, growth, food placement, collisions, pause and restart behavior, and full-board wins. The browser executes that engine through Pyodide while JavaScript renders the canvas and handles keyboard, swipe, and touch input.',
+    boundary: 'The first browser visit downloads the Python runtime. Personal best stays on the current browser and device. Nine automated rule tests and a WebAssembly bridge check pass; hosted gameplay has been verified.',
+    diagram: ['Input', 'Python engine', 'Canvas renderer', 'Personal best'],
+    source: 'https://github.com/Breedlove-Jason/snake_game',
+    liveUrl: 'https://snake.jasonbreedlove.dev',
+    liveLabel: 'Play Snake',
+  },
 ];
