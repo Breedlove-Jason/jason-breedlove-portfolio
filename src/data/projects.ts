@@ -4,7 +4,7 @@ export interface Project {
   id: string;
   number: string;
   title: string;
-  category: 'Mobile & systems' | 'Full stack' | 'Python & data' | 'Developer tools' | 'Games';
+  category: 'Mobile & systems' | 'Full stack' | 'Python & data' | 'Developer tools' | 'The Arcade';
   kind: string;
   status: 'In development' | 'Research prototype' | 'Public source' | 'Live demo';
   featured?: boolean;
@@ -93,7 +93,7 @@ export const projects: Project[] = [
     notebook: 'https://colab.research.google.com/github/Breedlove-Jason/reuters-similarity-lab/blob/master/notebooks/reuters_similarity.ipynb',
   },
   {
-    id: 'pacman', number: '07', title: 'Pacman JS', category: 'Games',
+    id: 'pacman', number: '07', title: 'Pacman JS', category: 'The Arcade',
     kind: 'VANILLA JAVASCRIPT + GAMEPLAY', status: 'Public source',
     headline: 'One more run.',
     description: 'A browser arcade game with a responsive maze, buffered keyboard turns, touch controls, power pellets, and a local personal best.',
@@ -146,7 +146,7 @@ export const projects: Project[] = [
     liveLabel: 'Explore the market',
   },
   {
-    id: 'snake', number: '11', title: 'Python Snake', category: 'Games',
+    id: 'snake', number: '11', title: 'Python Snake', category: 'The Arcade',
     kind: 'PYTHON + WEBASSEMBLY + CANVAS', status: 'Live demo',
     headline: 'Small moves. Long game.',
     description: 'A responsive Snake game that runs a shared Python rules engine across desktop Turtle graphics and a browser canvas.',

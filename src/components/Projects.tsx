@@ -25,7 +25,7 @@ const filters = [
   'Mobile & systems',
   'Python & data',
   'Developer tools',
-  'Games',
+  'The Arcade',
 ];
 const icons: Record<string, LucideIcon> = {
   memorybeam: Smartphone,
