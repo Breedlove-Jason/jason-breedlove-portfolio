@@ -183,7 +183,7 @@ export const projects: Project[] = [
     implementation: 'A display-independent rules module handles rolling, forfeiting a turn, banking points, and winning. The interface provides accessible die descriptions, live turn announcements, visible focus styles, and touch-friendly buttons.',
     boundary: 'Local pass-and-play for two people on one device. Nine rule tests and interface checks pass; hosted rolling, holding, turn switching, and reset were verified.',
     diagram: ['Roll', 'Risk', 'Bank', 'Pass the die'],
-    source: 'https://github.com/Breedlove-Jason/pig-game-v2/tree/feat/arcade-refresh',
+    source: 'https://github.com/Breedlove-Jason/pig',
     liveUrl: 'https://pig.jasonbreedlove.dev',
     liveLabel: 'Play Pig',
   },
