@@ -173,4 +173,18 @@ export const projects: Project[] = [
     liveUrl: 'https://pong.jasonbreedlove.dev',
     liveLabel: 'Play Pong',
   },
-]; 
+  {
+    id: 'pig', number: '13', title: 'Pig Game', category: 'The Arcade',
+    kind: 'JAVASCRIPT + TURN-BASED GAMEPLAY', status: 'Live demo',
+    headline: 'Know when to hold.',
+    description: 'A two-player dice game about risk and timing, with a responsive interface, clear turn indicators, and a race to bank 100 points.',
+    stack: ['JavaScript', 'HTML', 'CSS', 'ES modules'],
+    problem: 'Keep turn changes, temporary points, banked scores, and winning states clear across desktop and mobile screens.',
+    implementation: 'A display-independent rules module handles rolling, forfeiting a turn, banking points, and winning. The interface provides accessible die descriptions, live turn announcements, visible focus styles, and touch-friendly buttons.',
+    boundary: 'Local pass-and-play for two people on one device. Nine rule tests and interface checks pass; hosted rolling, holding, turn switching, and reset were verified.',
+    diagram: ['Roll', 'Risk', 'Bank', 'Pass the die'],
+    source: 'https://github.com/Breedlove-Jason/pig-game-v2/tree/feat/arcade-refresh',
+    liveUrl: 'https://pig.jasonbreedlove.dev',
+    liveLabel: 'Play Pig',
+  },
+];
