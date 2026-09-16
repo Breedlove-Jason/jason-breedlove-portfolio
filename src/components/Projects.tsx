@@ -37,6 +37,7 @@ const icons: Record<string, LucideIcon> = {
   pacman: Code2,
   fieldnotes: Code2,
   yelpcamp: Network,
+  farmfresh: Braces,
 };
 
 function ProjectDetails({ project }: { project: Project }) {
