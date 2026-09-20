@@ -221,4 +221,17 @@ export const projects: Project[] = [
     liveUrl: 'https://chat.jasonbreedlove.dev',
     liveLabel: 'Try Relay Chat',
   },
-];
+  {
+    id: 'scenescout', number: '16', title: 'SceneScout', category: 'Full stack',
+    kind: 'MOVIE DISCOVERY + PERSONAL WATCHLISTS', status: 'Live demo',
+    headline: 'Less scrolling. More cinema.',
+    description: 'A cinema-inspired movie and TV discovery app with searchable catalogs, trailers, cast details, and personal watchlists.',
+    stack: ['React', 'Express', 'MongoDB', 'TMDB', 'Vite'],
+    problem: 'Connect public discovery to private saved collections while keeping provider credentials and account ownership on the server.',
+    implementation: 'An Express API mediates TMDB requests, validates filters, and scopes MongoDB watchlists to authenticated users. The React interface supports movie and TV discovery, watched status, recent searches, and inline account validation.',
+    boundary: 'A portfolio discovery app, not a streaming service. Live search, watchlist persistence after reload, watched status, removal, and history were verified. No email verification or password recovery; free hosting may need time to wake up.',
+    diagram: ['React', 'Express API', 'TMDB', 'MongoDB'],
+    liveUrl: 'https://scenescout.jasonbreedlove.dev',
+    liveLabel: 'Explore SceneScout',
+  },
+]; 
