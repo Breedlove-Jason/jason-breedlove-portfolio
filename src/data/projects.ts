@@ -207,4 +207,18 @@ export const projects: Project[] = [
     liveUrl: 'https://blackjack.jasonbreedlove.dev',
     liveLabel: 'Play Blackjack',
   },
+  {
+    id: 'relay', number: '15', title: 'Relay Chat', category: 'Full stack',
+    kind: 'REALTIME MESSAGING + AUTHENTICATED SOCKETS', status: 'Live demo',
+    headline: 'Less noise. More connection.',
+    description: 'A responsive messaging app with live presence, typing indicators, image sharing, saved conversations, and an interactive guest preview.',
+    stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.IO', 'Cloudinary'],
+    problem: 'Keep conversations immediate while preserving message history and tying each connection to an authenticated account.',
+    implementation: 'An Express API and authenticated Socket.IO connections support private conversations, paginated history, and live presence. MongoDB persists messages, Cloudinary stores uploaded images, and the React interface adds conversation search, themes, and clear sign-in feedback.',
+    boundary: 'A single-instance portfolio demo with a sample conversation available before signup. Free hosting can take a moment to wake up. Messages are not end-to-end encrypted.',
+    diagram: ['React', 'Express + Socket.IO', 'MongoDB', 'Cloudinary'],
+    source: 'https://github.com/Breedlove-Jason/realtime-chat-app',
+    liveUrl: 'https://chat.jasonbreedlove.dev',
+    liveLabel: 'Try Relay Chat',
+  },
 ];

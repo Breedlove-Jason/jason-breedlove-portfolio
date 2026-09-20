@@ -51,3 +51,9 @@ The React, Next.js, TypeScript, React Native, Express, PostgreSQL, MongoDB, Dock
 The “Connected by Curiosity” globe includes TypeScript, JavaScript, Python, Java, SQL, React, MongoDB, Flask, and Django as languages, frameworks, and databases worked with or studied. The user requested React, MongoDB, Flask, and Django and removed Swift, Kotlin, and C# because of limited use. The list does not assign proficiency ratings or imply equal experience across technologies; HTML/CSS, Linux, and security concepts remain in the technical-focus captions.
 
 The AI-assisted workflow statement is drawn from the existing local portfolio’s `src/data/workflow.ts`. It describes review and ownership, without claiming sole manual authorship of every line in AI-assisted projects.
+
+## Relay Chat — September 20, 2026
+
+- Source: https://github.com/Breedlove-Jason/realtime-chat-app, including authenticated Socket.IO, MongoDB message persistence, Cloudinary uploads, and the React guest preview.
+- Deployment: https://chat.jasonbreedlove.dev on Render; custom-domain operation confirmed by the project owner.
+- Descriptions reflect the implemented single-instance demo. No end-to-end encryption or production-scale availability is claimed.
