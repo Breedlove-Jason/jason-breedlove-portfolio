@@ -13,6 +13,7 @@ import {
   Terminal,
   Braces,
   Network,
+  Wallet,
 } from 'lucide-react';
 import { projects } from '../data/projects';
 import type { Project } from '../data/projects';
@@ -25,10 +26,12 @@ const filters = [
   'Mobile & systems',
   'Python & data',
   'Developer tools',
+  'Web apps',
   'The Arcade',
 ];
 const icons: Record<string, LucideIcon> = {
   memorybeam: Smartphone,
+  ledger: Wallet,
   cryptoforge: Network,
   envranger: Terminal,
   productstore: Braces,

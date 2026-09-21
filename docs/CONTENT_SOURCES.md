@@ -50,3 +50,10 @@ The AI-assisted workflow statement is drawn from the existing local portfolio’
 - Source: https://github.com/Breedlove-Jason/realtime-chat-app, including authenticated Socket.IO, MongoDB message persistence, Cloudinary uploads, and the React guest preview.
 - Deployment: https://chat.jasonbreedlove.dev on Render; custom-domain operation confirmed by the project owner.
 - Descriptions reflect the implemented single-instance demo. No end-to-end encryption or production-scale availability is claimed.
+
+## Ledger — September 21, 2026
+
+- Rebuilt the public `react-expense-tracker` repository, preserving its Git history and crediting the original Expense Manager, Investment Calculator, and Calculator App projects.
+- Live at https://ledger.jasonbreedlove.dev/ on Vercel.
+- Eight automated core tests and production build pass. Hosted transaction create/edit/delete, reload persistence, budget persistence, calculator-to-expense transfer, zero-return projection and backup download were verified. Backup JSON was inspected successfully; a browser file-picker timeout prevented end-to-end restore verification.
+- Browser-local storage only; no cloud sync, bank integration or investment-performance promise.
