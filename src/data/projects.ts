@@ -247,7 +247,7 @@ export const projects: Project[] = [
     implementation: 'An isolated Java engine and a browser implementation cover repeated guesses, input validation, exact loss limits, and replay. The browser vocabulary is checked against the Java word bank. Java 17 and 21 builds run in GitHub Actions.',
     boundary: 'The live demo runs in JavaScript; the Java terminal edition remains in the project repository. Scores stay in the current browser. No accounts, online leaderboard, or multiplayer.',
     diagram: ['Choose level', 'Guess letters', 'Reveal animal', 'Play again'],
-    liveUrl: 'https://www.jasonbreedlove.dev/arcade/hangman/', liveLabel: 'Play Hangman',
+    liveUrl: 'https://hangman.jasonbreedlove.dev/', liveLabel: 'Play Hangman',
     howToPlay: 'Choose the next round’s difficulty, then start a new round. Type or tap letters to reveal the animal before your chances run out. Repeated guesses are free. Wins, losses, and your current streak are saved in this browser.',
   },
   {
