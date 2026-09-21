@@ -1,8 +1,8 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --font-sans: Inter, Arial, sans-serif;
-  --font-display: 'Space Grotesk', Arial, sans-serif;
+  --font-display: "Space Grotesk", Arial, sans-serif;
   --color-ink: #0b111b;
   --color-surface: #101925;
   --color-line: #28313e;
@@ -27,7 +27,7 @@
     --muted: #a7b2c0;
     --accent: #a5dfd8;
     --gold: #d8b583;
-    --display: 'Space Grotesk', Arial, sans-serif;
+    --display: "Space Grotesk", Arial, sans-serif;
   }
   * {
     box-sizing: border-box;
@@ -586,7 +586,7 @@
     margin-right: 6px;
     color: #75859c;
   }
-  .domain-selector button[aria-pressed='true'] {
+  .domain-selector button[aria-pressed="true"] {
     @apply text-signal;
     border-color: var(--accent);
   }
@@ -617,7 +617,7 @@
     @apply gap-4;
   }
   .discipline-strip > span:not(:first-child)::before {
-    content: '+';
+    content: "+";
     color: #6b9dba;
   }
   .text-muted {
@@ -650,7 +650,7 @@
     font-size: 13px;
     min-height: 42px;
   }
-  .project-filters button[aria-pressed='true'] {
+  .project-filters button[aria-pressed="true"] {
     @apply text-signal;
     border-color: #36545e;
     background: #152a35;
@@ -678,18 +678,6 @@
     @apply overflow-hidden;
     transition: border-color 0.2s;
   }
-  .project-card:not(.project-featured) {
-    display: flex;
-    flex-direction: column;
-  }
-  .project-card:not(.project-featured) .project-card-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .project-card:not(.project-featured) .tech-tags {
-    margin-top: auto;
-  }
   .project-links {
     display: flex;
     flex-wrap: wrap;
@@ -698,9 +686,6 @@
   }
   .project-card:hover {
     border-color: #567887;
-  }
-  .project-card-content {
-    padding: 30px 32px 27px;
   }
   .project-card-top {
     @apply flex;
@@ -767,10 +752,6 @@
     padding: 4px 8px;
     border-radius: 2px;
   }
-  .project-card-footer {
-    padding: 0 32px;
-    border-top: 1px solid #293646;
-  }
   .project-details > summary {
     min-height: 52px;
     @apply flex;
@@ -836,133 +817,7 @@
   .mini-pipeline svg {
     color: #70899b;
   }
-  .project-featured {
-    grid-column: 1 / -1;
-    @apply grid;
-    grid-template-columns: 1fr 1fr;
-    background:
-      radial-gradient(ellipse at 78% 38%, #29697622, transparent 50%), #0f1925;
-    border-color: #3b5867;
-  }
-  .project-featured .project-card-content {
-    padding: 37px;
-  }
-  .project-featured .project-card-top {
-    margin-bottom: 27px;
-  }
-  .project-featured .project-description {
-    min-height: 0;
-    max-width: 470px;
-  }
-  .project-featured h3 {
-    font-size: 38px;
-  }
-  .project-featured h3 > span {
-    @apply hidden;
-  }
-  .project-featured .project-headline {
-    font-size: 17px;
-    max-width: 400px;
-  }
-  .project-featured .project-card-footer {
-    grid-column: 1/-1;
-    @apply grid;
-    grid-template-columns: 1fr 190px;
-    @apply items-start;
-    gap: 30px;
-    padding-inline: 37px;
-  }
-  .project-featured .source-link {
-    justify-self: end;
-  }
-  .memorybeam-diagram {
-    @apply flex;
-    @apply flex-col;
-    @apply justify-center;
-    padding: 36px;
-    @apply min-w-0;
-    background:
-      linear-gradient(90deg, transparent 98%, #809dad08 98%),
-      linear-gradient(transparent 98%, #809dad08 98%);
-    background-size: 30px 30px;
-    margin: 22px;
-    border-left: 1px solid #3b526733;
-  }
-  .diagram-label {
-    color: #8aa7ba;
-    font: 12px/1.5 var(--display);
-    letter-spacing: 1px;
-    @apply flex;
-    @apply justify-between;
-    gap: 15px;
-    @apply items-center;
-  }
-  .beam-pipeline {
-    @apply flex;
-    margin: 45px 0;
-    gap: 5px;
-  }
-  .beam-stage {
-    @apply flex-1;
-    @apply min-w-0;
-    @apply flex;
-    @apply flex-col;
-    @apply items-center;
-    @apply relative;
-  }
-  .stage-number {
-    font: 12px var(--display);
-    color: #7191a7;
-    margin-bottom: 15px;
-  }
-  .stage-icon {
-    width: 68px;
-    height: 76px;
-    @apply grid;
-    place-items: center;
-    border: 1px solid #52808c;
-    background: #122c36;
-    border-radius: 5px;
-    @apply text-signal;
-    box-shadow:
-      0 0 25px #47baca0e,
-      inset 0 0 18px #47baca08;
-  }
-  .stage-connector {
-    @apply absolute;
-    height: 1px;
-    width: calc(100% - 68px);
-    top: 63px;
-    left: calc(50% + 34px);
-    background: linear-gradient(90deg, #9ae5ebaa, #9ae5eb33);
-  }
-  .beam-stage strong {
-    font: 500 14px var(--display);
-    margin-top: 19px;
-  }
-  .beam-stage > span:last-child {
-    font-size: 12px;
-    color: #94acbd;
-    margin-top: 8px;
-    white-space: nowrap;
-  }
-  .protocol-line {
-    @apply flex;
-    @apply flex-wrap;
-    @apply justify-between;
-    @apply gap-3;
-    border-top: 1px solid #314b5a;
-    padding-top: 17px;
-    color: #94b6c5;
-    font: 12px/1.7 var(--display);
-    letter-spacing: 0.8px;
-  }
-  .project-cryptoforge .project-type {
-    color: #b3a5f3;
-  }
-  .project-cryptoforge {
-    background: linear-gradient(145deg, #28213940, #0f1723);
-  }
+
   .work-footer {
     margin-top: 33px;
     @apply flex;
@@ -1431,7 +1286,7 @@
     border-color: var(--accent);
     outline-offset: 1px;
   }
-  .field [aria-invalid='true'] {
+  .field [aria-invalid="true"] {
     border-color: #f1b0ad;
   }
   .field-error {
@@ -1578,51 +1433,11 @@
       letter-spacing: 1px;
       @apply gap-3;
     }
-    .project-card-content {
-      padding: 26px;
-    }
     .project-card h3 {
       font-size: 26px;
     }
-    .project-card-footer {
-      padding-inline: 26px;
-    }
     .mini-pipeline {
       margin-inline: 26px;
-    }
-    .project-featured .project-card-content {
-      padding: 28px;
-    }
-    .project-featured .project-card-footer {
-      padding-inline: 28px;
-    }
-    .memorybeam-diagram {
-      margin: 13px;
-      padding: 23px 14px;
-    }
-    .stage-icon {
-      width: 55px;
-      height: 65px;
-    }
-    .stage-connector {
-      left: calc(50% + 27.5px);
-      width: calc(100% - 55px);
-      top: 58px;
-    }
-    .stage-icon svg {
-      width: 25px;
-    }
-    .beam-stage strong {
-      font-size: 13px;
-    }
-    .beam-stage > span:last-child {
-      font-size: 12px;
-    }
-    .diagram-label {
-      font-size: 12px;
-    }
-    .protocol-line {
-      font-size: 12px;
     }
     .skills-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1744,18 +1559,8 @@
       grid-template-columns: 1fr;
       @apply gap-5;
     }
-    .project-featured {
-      @apply block;
-    }
-    .project-card-content,
-    .project-featured .project-card-content {
-      @apply p-6;
-    }
     .project-card h3 {
       font-size: 26px;
-    }
-    .project-featured h3 {
-      font-size: 33px;
     }
     .project-type {
       font-size: 12px;
@@ -1767,46 +1572,6 @@
     .project-description {
       min-height: 0;
       font-size: 16px;
-    }
-    .project-featured .project-headline {
-      font-size: 16px;
-    }
-    .project-card-footer,
-    .project-featured .project-card-footer {
-      @apply block;
-      padding: 0 24px;
-    }
-    .memorybeam-diagram {
-      border-left: 0;
-      border-top: 1px solid #314452;
-      margin: 0 24px 23px;
-      padding: 23px 0 0;
-    }
-    .diagram-label {
-      font-size: 12px;
-    }
-    .beam-pipeline {
-      margin-block: 25px;
-    }
-    .stage-icon {
-      width: 56px;
-      height: 63px;
-    }
-    .stage-connector {
-      width: calc(100% - 56px);
-      left: calc(50% + 28px);
-      top: 57px;
-    }
-    .beam-stage strong {
-      font-size: 14px;
-      margin-top: 13px;
-    }
-    .beam-stage > span:last-child {
-      font-size: 12px;
-    }
-    .protocol-line {
-      font-size: 12px;
-      padding-top: 12px;
     }
     .mini-pipeline {
       margin-inline: 24px;
@@ -2002,10 +1767,6 @@
     .contact-email {
       font-size: 14px;
     }
-    .project-card-content,
-    .project-featured .project-card-content {
-      padding: 20px;
-    }
     .contact-form-panel {
       padding: 20px;
     }
@@ -2015,13 +1776,97 @@
     font-size: 13px;
     line-height: 1.7;
   }
-  .beam-stage > span:last-child {
-    @apply max-w-full px-1 text-center whitespace-normal;
-    line-height: 1.5;
-  }
   @media (max-width: 760px) {
     .brand-name > span {
       @apply hidden;
     }
+  }
+}
+
+/* One card structure for every project and filter. Shared tracks keep all
+   sections aligned without clipping content or imposing fixed text heights. */
+.project-grid {
+  column-gap: 25px;
+  row-gap: 0;
+}
+.project-grid > .project-card {
+  --card-inset: clamp(20px, 3vw, 32px);
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 9;
+  row-gap: 0;
+  padding: 30px 0 0;
+  margin-bottom: 25px;
+  min-width: 0;
+}
+.project-card > * {
+  min-width: 0;
+  margin-inline: var(--card-inset);
+}
+.project-card > .project-card-top {
+  gap: 12px;
+  margin-bottom: 28px;
+  align-self: start;
+}
+.project-card > .project-type {
+  align-items: start;
+  margin-bottom: 18px;
+}
+.project-card > .project-type svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.project-card > h3 {
+  font-size: clamp(26px, 2.4vw, 30px);
+  margin-bottom: 12px;
+}
+.project-card > .project-headline {
+  margin-bottom: 14px;
+}
+.project-card > .project-description {
+  min-height: 0;
+  margin-bottom: 24px;
+}
+.project-card > .tech-tags {
+  align-content: start;
+  align-items: start;
+  margin-bottom: 26px;
+}
+.project-card > .mini-pipeline {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  align-items: start;
+  gap: 12px 16px;
+  margin-bottom: 26px;
+  padding-top: 20px;
+}
+.project-card > .mini-pipeline > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.project-card > .mini-pipeline svg {
+  flex-shrink: 0;
+}
+.project-card > .project-details {
+  margin-inline: 0;
+  padding-inline: var(--card-inset);
+  border-top: 1px solid #293646;
+}
+.project-card > .project-links {
+  margin-inline: 0;
+  padding: 6px var(--card-inset) 12px;
+  align-content: start;
+  align-items: start;
+  gap: 0 24px;
+}
+.project-card .source-link {
+  min-height: 44px;
+}
+@media (max-width: 760px) {
+  .project-grid > .project-card {
+    margin-bottom: 20px;
+    padding-top: 24px;
   }
 }

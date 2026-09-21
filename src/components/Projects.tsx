@@ -1,33 +1,33 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
   ChevronDown,
   Code2,
   Github,
+  MessageSquare,
+  ExternalLink,
+  BookOpen,
   Smartphone,
-  ShieldCheck,
-  CheckCheck,
-  Video,
   Database,
   Terminal,
   Braces,
   Network,
   Wallet,
-} from 'lucide-react';
-import { projects } from '../data/projects';
-import type { Project } from '../data/projects';
-import type { LucideIcon } from 'lucide-react';
-import SectionHeading from './SectionHeading.tsx';
+} from "lucide-react";
+import { projects } from "../data/projects";
+import type { Project } from "../data/projects";
+import type { LucideIcon } from "lucide-react";
+import SectionHeading from "./SectionHeading.tsx";
 
 const filters = [
-  'All work',
-  'Full stack',
-  'Mobile & systems',
-  'Python & data',
-  'Developer tools',
-  'Web apps',
-  'The Arcade',
+  "All work",
+  "Full stack",
+  "Mobile & systems",
+  "Python & data",
+  "Developer tools",
+  "Web apps",
+  "The Arcade",
 ];
 const icons: Record<string, LucideIcon> = {
   memorybeam: Smartphone,
@@ -51,6 +51,12 @@ function ProjectDetails({ project }: { project: Project }) {
         Engineering notes <ChevronDown size={17} aria-hidden="true" />
       </summary>
       <div className="project-detail-body">
+        {project.howToPlay && (
+          <>
+            <h4>How to play</h4>
+            <p>{project.howToPlay}</p>
+          </>
+        )}
         <h4>The problem</h4>
         <p>{project.problem}</p>
         <h4>The implementation</h4>
@@ -62,47 +68,10 @@ function ProjectDetails({ project }: { project: Project }) {
   );
 }
 
-function MemoryBeamDiagram() {
-  const steps = [
-    [Video, '01', 'Create', 'Capture & edit'],
-    [ShieldCheck, '02', 'Connect', 'Pin & pair'],
-    [CheckCheck, '03', 'Preserve', 'Verify the master'],
-  ] as const;
-  return (
-    <div
-      className="memorybeam-diagram"
-      role="img"
-      aria-label="MemoryBeam architecture: create a finished video, connect with certificate-pinned pairing, and preserve it with verified delivery."
-    >
-      <div className="diagram-label">
-        <span>MEMORYBEAM / DELIVERY ARCHITECTURE</span>
-        <Code2 size={16} />
-      </div>
-      <div className="beam-pipeline">
-        {steps.map(([Icon, number, title, text], index) => (
-          <div className="beam-stage" key={title}>
-            <span className="stage-number">{number}</span>
-            <div className="stage-icon">
-              <Icon size={30} strokeWidth={1.2} />
-              {index < 2 && <span className="stage-connector" />}
-            </div>
-            <strong>{title}</strong>
-            <span>{text}</span>
-          </div>
-        ))}
-      </div>
-      <div className="protocol-line">
-        <span>HTTPS + CERTIFICATE PINNING</span>
-        <span>SHA-256 INTEGRITY</span>
-      </div>
-    </div>
-  );
-}
-
 export default function Projects() {
-  const [filter, setFilter] = useState('All work');
+  const [filter, setFilter] = useState("All work");
   const visibleProjects = projects.filter(
-    (project) => filter === 'All work' || project.category === filter,
+    (project) => filter === "All work" || project.category === filter,
   );
   return (
     <section className="section shell projects-section" id="projects">
@@ -137,61 +106,47 @@ export default function Projects() {
           ))}
         </div>
         <span className="project-count" aria-live="polite">
-          {String(visibleProjects.length).padStart(2, '0')} PROJECTS
+          {String(visibleProjects.length).padStart(2, "0")} PROJECTS
         </span>
       </div>
       <div className="project-grid">
         {visibleProjects.map((project) => {
           const Icon = icons[project.id] ?? Code2;
           return (
-            <article
-              key={project.id}
-              className={`project-card project-${project.id} ${project.featured ? 'project-featured' : ''}`}
-            >
-              <div className="project-card-content">
-                <div className="project-card-top">
-                  <span className="project-number">/{project.number}</span>
-                  <span className="project-status">{project.status}</span>
-                </div>
-                <div className="project-type">
-                  <Icon size={17} aria-hidden="true" />
-                  {project.kind}
-                </div>
-                <h3>
-                  {project.title}
-                  <span aria-hidden="true">↗</span>
-                </h3>
-                <p className="project-headline">{project.headline}</p>
-                <p className="project-description">{project.description}</p>
-                <div className="tech-tags" aria-label="Technology stack">
-                  {project.stack.map((tech) => (
-                    <span key={tech}>{tech}</span>
-                  ))}
-                </div>
+            <article key={project.id} className="project-card">
+              <div className="project-card-top">
+                <span className="project-number">/{project.number}</span>
+                <span className="project-status">{project.status}</span>
               </div>
-              {project.featured ? (
-                <MemoryBeamDiagram />
-              ) : (
-                <div className="mini-pipeline" aria-label="Architecture">
-                  {project.diagram.map((step, index) => (
-                    <span key={step}>
-                      {step}
-                      {index < project.diagram.length - 1 && (
-                        <ArrowRight size={12} aria-hidden="true" />
-                      )}
-                    </span>
-                  ))}
-                </div>
-              )}
-              <div className="project-card-footer">
-                {project.howToPlay && (
-                  <details className="project-details">
-                    <summary>How to play <ChevronDown size={17} aria-hidden="true" /></summary>
-                    <div className="project-detail-body"><p>{project.howToPlay}</p></div>
-                  </details>
-                )}
-                <ProjectDetails project={project} />
-                <div className="project-links">
+              <div className="project-type">
+                <Icon size={17} aria-hidden="true" />
+                {project.kind}
+              </div>
+              <h3>
+                {project.title}
+                <span aria-hidden="true">↗</span>
+              </h3>
+              <p className="project-headline">{project.headline}</p>
+              <p className="project-description">{project.description}</p>
+              <div className="tech-tags" aria-label="Technology stack">
+                {project.stack.map((tech) => (
+                  <span key={tech}>{tech}</span>
+                ))}
+              </div>
+
+              <div className="mini-pipeline" aria-label="Architecture">
+                {project.diagram.map((step, index) => (
+                  <span key={step}>
+                    {step}
+                    {index < project.diagram.length - 1 && (
+                      <ArrowRight size={12} aria-hidden="true" />
+                    )}
+                  </span>
+                ))}
+              </div>
+
+              <ProjectDetails project={project} />
+              <div className="project-links">
                 {project.source ? (
                   <a
                     className="source-link"
@@ -204,21 +159,34 @@ export default function Projects() {
                   </a>
                 ) : (
                   <a className="source-link" href="#contact">
-                    Discuss this project{' '}
+                    <MessageSquare size={16} aria-hidden="true" />
+                    Discuss this project{" "}
                     <ArrowUpRight size={15} aria-hidden="true" />
                   </a>
                 )}
                 {project.liveUrl && (
-                  <a className="source-link" href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                    {project.liveLabel || 'Visit project'} <ArrowUpRight size={15} aria-hidden="true" />
+                  <a
+                    className="source-link"
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLink size={16} aria-hidden="true" />
+                    {project.liveLabel || "Visit project"}{" "}
+                    <ArrowUpRight size={15} aria-hidden="true" />
                   </a>
                 )}
                 {project.notebook && (
-                  <a className="source-link" href={project.notebook} target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="source-link"
+                    href={project.notebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <BookOpen size={16} aria-hidden="true" />
                     Open in Colab <ArrowUpRight size={15} aria-hidden="true" />
                   </a>
                 )}
-                </div>
               </div>
             </article>
           );
