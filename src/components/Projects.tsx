@@ -29,7 +29,6 @@ const filters = [
 ];
 const icons: Record<string, LucideIcon> = {
   memorybeam: Smartphone,
-  legion: Database,
   cryptoforge: Network,
   envranger: Terminal,
   productstore: Braces,

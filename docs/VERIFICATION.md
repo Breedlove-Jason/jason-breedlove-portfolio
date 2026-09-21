@@ -7,7 +7,7 @@ Completed against the local compiled build on September 11, 2026.
 - The compiled Express server returned the production frontend and security headers correctly.
 - Browser checks found no console errors in the compiled page.
 - Desktop layout reviewed at 1440 × 1000; mobile layouts at 390 × 844 and 320 × 820. No page-level horizontal overflow was observed.
-- Project navigation and category filtering worked; the full-stack filter showed American Legion Post 84 and MERN Product Store.
+- Project navigation and category filtering worked; the full-stack filter showed the available full-stack projects.
 - MemoryBeam engineering notes opened and exposed the implementation and development boundaries.
 - Mobile navigation closed after selection and supported Escape.
 - Submitting an empty form produced field errors and moved focus to the first invalid field.

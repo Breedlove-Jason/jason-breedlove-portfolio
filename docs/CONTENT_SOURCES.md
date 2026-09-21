@@ -18,13 +18,6 @@ Reviewed September 11, 2026. Repository documents were used as factual source ma
 - Existing task **Build Custom Linux Platform**: guided capture, teleprompter, non-destructive editing, finished masters, Android delivery limitations, and the development-only status of MemoryBeam OS “First Light.”
 - The repository is private. The website summarizes engineering at a high level and does not link to inaccessible code or claim a shipped device.
 
-### American Legion Post 84
-
-- GitHub repository `Breedlove-Jason/american-legion-post84`, `package.json` at blob `cd75f2a2a7396a10a9cd7ec35fc2b69381a58645`: Next.js, TypeScript, Prisma, PostgreSQL adapter, Stripe, notification dependencies.
-- Its README documents checkout, server integrations, and notification configuration.
-- Existing local `web-dev-portfolio/src/data/projects.ts`: members, officers, events, CMS, dues/donations/payment workflows, and in-development status.
-- No production rollout or business outcome is claimed. Private source is not exposed.
-
 ### CryptoForge
 
 - GitHub `Breedlove-Jason/crypto_forge/README.md`, blob `32563c74ac956609e24ddd1d021714ea33a443cb`: modular data/features/models/research architecture, LightGBM and XGBoost, probability calibration, walk-forward validation, normalized schemas, SHA-256 manifests, provider budgets, and offline fixture runs.

@@ -35,18 +35,7 @@ export const projects: Project[] = [
     diagram: ['Capture', 'Edit', 'Send', 'Enjoy'],
   },
   {
-    id: 'legion', number: '02', title: 'American Legion Post 84', category: 'Full stack',
-    kind: 'FULL-STACK OPERATIONS PLATFORM', status: 'In development',
-    headline: 'Software in service of a community.',
-    description: 'A unified admin platform for member records, content, events, dues, donations, and payment workflows.',
-    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Stripe'],
-    problem: 'Bring the everyday administration of a veterans’ organization into a coherent set of digital workflows.',
-    implementation: 'The project includes responsive CMS and admin modules, member and officer management, Stripe checkout and webhook flows, payment tracking, and notification infrastructure. Prisma provides the data layer over PostgreSQL.',
-    boundary: 'An active development project. Production adoption and organization-wide rollout are not claimed.',
-    diagram: ['Admin UI', 'Server routes', 'Prisma', 'PostgreSQL'],
-  },
-  {
-    id: 'cryptoforge', number: '03', title: 'CryptoForge', category: 'Python & data',
+    id: 'cryptoforge', number: '02', title: 'CryptoForge', category: 'Python & data',
     kind: 'MACHINE LEARNING + DATA ENGINEERING', status: 'Research prototype',
     headline: 'Research that can be reproduced.',
     description: 'A modular market research framework for data ingestion, feature engineering, calibrated classifiers, and walk-forward evaluation.',
@@ -57,7 +46,7 @@ export const projects: Project[] = [
     diagram: ['Market data', 'Features', 'Model zoo', 'Walk-forward'],
   },
   {
-    id: 'envranger', number: '04', title: 'Envranger', category: 'Developer tools',
+    id: 'envranger', number: '03', title: 'Envranger', category: 'Developer tools',
     kind: 'TYPESCRIPT DEVELOPER TOOLING', status: 'Public source',
     headline: 'Make configuration explain itself.',
     description: 'A CLI and terminal interface for scanning, validating, and managing environment configuration across JavaScript and TypeScript projects.',
@@ -69,7 +58,7 @@ export const projects: Project[] = [
     source: 'https://github.com/Breedlove-Jason/envranger',
   },
   {
-    id: 'productstore', number: '05', title: 'MERN Product Store', category: 'Full stack',
+    id: 'productstore', number: '04', title: 'MERN Product Store', category: 'Full stack',
     kind: 'REACT + EXPRESS + MONGODB', status: 'Public source',
     headline: 'A complete path from interface to database.',
     description: 'A full-stack product management application with a Vite-powered React frontend and an Express API backed by MongoDB.',
@@ -81,7 +70,7 @@ export const projects: Project[] = [
     source: 'https://github.com/Breedlove-Jason/productStore-MERN',
   },
   {
-    id: 'reuters', number: '06', title: 'Reuters Similarity Lab', category: 'Python & data',
+    id: 'reuters', number: '05', title: 'Reuters Similarity Lab', category: 'Python & data',
     kind: 'NLP + DOCUMENT RETRIEVAL', status: 'Public source',
     headline: 'Explore what makes two articles similar.',
     description: 'An interactive experiment in word n-grams and Jaccard similarity across the complete Reuters-21578 collection, with 19,043 article bodies available for search.',
@@ -95,7 +84,7 @@ export const projects: Project[] = [
   },
   {
     howToPlay: "Collect every dot while avoiding ghosts. Use arrow keys or WASD, or the on-screen arrows. Power pellets let you catch ghosts briefly. Space pauses the game.",
-    id: 'pacman', number: '07', title: 'Pacman JS', category: 'The Arcade',
+    id: 'pacman', number: '06', title: 'Pacman JS', category: 'The Arcade',
     kind: 'VANILLA JAVASCRIPT + GAMEPLAY', status: 'Public source',
     headline: 'One more run.',
     description: 'A browser arcade game with a responsive maze, buffered keyboard turns, touch controls, power pellets, and a local personal best.',
@@ -107,7 +96,7 @@ export const projects: Project[] = [
     source: 'https://github.com/Breedlove-Jason/pacman-js',
   },
   {
-    id: 'fieldnotes', number: '08', title: 'Field Notes — Flask Blog', category: 'Full stack',
+    id: 'fieldnotes', number: '07', title: 'Field Notes — Flask Blog', category: 'Full stack',
     kind: 'PYTHON + PUBLISHING', status: 'Public source',
     headline: 'A place for ideas from the build.',
     description: 'A Flask journal with readable project stories, accounts, comments, and an editor dashboard for publishing and managing posts.',
@@ -121,7 +110,7 @@ export const projects: Project[] = [
     liveLabel: 'Read blog',
   },
   {
-    id: 'yelpcamp', number: '09', title: 'YelpCamp', category: 'Full stack',
+    id: 'yelpcamp', number: '08', title: 'YelpCamp', category: 'Full stack',
     kind: 'EXPRESS + MAPS + API INTEGRATION', status: 'Live demo',
     headline: 'Find a campsite. Share the experience.',
     description: 'A campground discovery and review app with interactive maps, Recreation.gov data, image uploads, and five-star ratings.',
@@ -134,7 +123,7 @@ export const projects: Project[] = [
     liveLabel: 'Explore YelpCamp',
   },
   {
-    id: 'farmfresh', number: '10', title: 'Farm Fresh Market', category: 'Full stack',
+    id: 'farmfresh', number: '09', title: 'Farm Fresh Market', category: 'Full stack',
     kind: 'EXPRESS + MONGODB + CATALOG MANAGEMENT', status: 'Live demo',
     headline: 'From local farms to a connected catalog.',
     description: 'A farm-to-market catalog with searchable farms, category filters, product listings, and protected owner editing in a Bootstrap interface.',
@@ -149,7 +138,7 @@ export const projects: Project[] = [
   },
   {
     howToPlay: "Eat food to grow and score. Turn with arrow keys or WASD; swipe or use the arrow buttons on mobile. Avoid the walls and your own tail. Space pauses; Restart begins a fresh run.",
-    id: 'snake', number: '11', title: 'Python Snake', category: 'The Arcade',
+    id: 'snake', number: '10', title: 'Python Snake', category: 'The Arcade',
     kind: 'PYTHON + WEBASSEMBLY + CANVAS', status: 'Live demo',
     headline: 'Small moves. Long game.',
     description: 'A responsive Snake game that runs a shared Python rules engine across desktop Turtle graphics and a browser canvas.',
@@ -164,7 +153,7 @@ export const projects: Project[] = [
   },
   {
     howToPlay: "Control the left paddle with Up/Down or W/S. On mobile, drag on the court or hold the arrow buttons. Return the ball past the opponent; first to seven wins. Space pauses and R resets.",
-    id: 'pong', number: '12', title: 'Python Pong', category: 'The Arcade',
+    id: 'pong', number: '11', title: 'Python Pong', category: 'The Arcade',
     kind: 'PYTHON + WEBASSEMBLY + PHYSICS', status: 'Live demo',
     headline: 'Keep the rally alive.',
     description: 'A classic paddle rivalry with a Python-powered browser edition, a computer opponent, and keyboard and touch controls.',
@@ -179,7 +168,7 @@ export const projects: Project[] = [
   },
   {
     howToPlay: "Two players share one device. Roll adds to your turn score. Hold banks those points and passes the turn. Rolling a one loses only the unbanked points and passes the turn. First to bank 100 wins.",
-    id: 'pig', number: '13', title: 'Pig Game', category: 'The Arcade',
+    id: 'pig', number: '12', title: 'Pig Game', category: 'The Arcade',
     kind: 'JAVASCRIPT + TURN-BASED GAMEPLAY', status: 'Live demo',
     headline: 'Know when to hold.',
     description: 'A two-player dice game about risk and timing, with a responsive interface, clear turn indicators, and a race to bank 100 points.',
@@ -193,7 +182,7 @@ export const projects: Project[] = [
     liveLabel: 'Play Pig',
   },
   {
-    id: 'blackjack', number: '14', title: 'Python Blackjack', category: 'The Arcade',
+    id: 'blackjack', number: '13', title: 'Python Blackjack', category: 'The Arcade',
     kind: 'PYTHON + WEBASSEMBLY + CARD GAME', status: 'Live demo',
     headline: 'A little nerve. A little intuition.',
     description: 'An emerald-and-gold Blackjack table powered by Python, with responsive cards, dealer play, and session scores.',
@@ -208,7 +197,7 @@ export const projects: Project[] = [
     liveLabel: 'Play Blackjack',
   },
   {
-    id: 'relay', number: '15', title: 'Relay Chat', category: 'Full stack',
+    id: 'relay', number: '14', title: 'Relay Chat', category: 'Full stack',
     kind: 'REALTIME MESSAGING + AUTHENTICATED SOCKETS', status: 'Live demo',
     headline: 'Less noise. More connection.',
     description: 'A responsive messaging app with live presence, typing indicators, image sharing, saved conversations, and an interactive guest preview.',
@@ -222,7 +211,7 @@ export const projects: Project[] = [
     liveLabel: 'Try Relay Chat',
   },
   {
-    id: 'scenescout', number: '16', title: 'SceneScout', category: 'Full stack',
+    id: 'scenescout', number: '15', title: 'SceneScout', category: 'Full stack',
     kind: 'MOVIE DISCOVERY + PERSONAL WATCHLISTS', status: 'Live demo',
     headline: 'Less scrolling. More cinema.',
     description: 'A cinema-inspired movie and TV discovery app with searchable catalogs, trailers, cast details, and personal watchlists.',

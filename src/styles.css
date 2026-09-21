@@ -963,12 +963,6 @@
   .project-cryptoforge {
     background: linear-gradient(145deg, #28213940, #0f1723);
   }
-  .project-legion .project-type {
-    color: var(--gold);
-  }
-  .project-legion {
-    background: linear-gradient(145deg, #392d1c26, #0f1723);
-  }
   .work-footer {
     margin-top: 33px;
     @apply flex;
