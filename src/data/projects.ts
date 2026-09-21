@@ -250,4 +250,16 @@ export const projects: Project[] = [
     liveUrl: 'https://www.jasonbreedlove.dev/arcade/hangman/', liveLabel: 'Play Hangman',
     howToPlay: 'Choose the next round’s difficulty, then start a new round. Type or tap letters to reveal the animal before your chances run out. Repeated guesses are free. Wins, losses, and your current streak are saved in this browser.',
   },
+  {
+    id: 'brewdesk', number: '18', title: 'BrewDesk', category: 'Full stack',
+    kind: 'PYTHON + FLASK + WORKSPACE DISCOVERY', status: 'Live demo',
+    headline: 'Good coffee. Better workdays.',
+    description: 'A café finder combining two earlier Flask projects into one workspace for searching, comparing, bookmarking, and keeping a personal café collection.',
+    stack: ['Python', 'Flask', 'SQLAlchemy', 'JavaScript', 'pytest'],
+    problem: 'Unify duplicate café projects and replace brittle configuration, inconsistent ratings, and unsafe public editing with a useful, clearly scoped application.',
+    implementation: 'SQL-backed search and rating filters, stable sorting, three-café comparison, validated personal entries, local bookmarks, and a repeatable CSV importer. Twenty backend tests and four browser-data tests cover core behavior.',
+    boundary: 'The public demo uses five clearly labeled legacy sample cafés in a read-only catalog. Personal entries and favorites stay in the current browser. A persistent external SQL catalog is supported through explicit operator setup; live venue information and cloud sync are not claimed.',
+    diagram: ['Find a spot', 'Check ratings', 'Compare cafés', 'Save favorites'],
+    liveUrl: 'https://brewdesk.jasonbreedlove.dev/', liveLabel: 'Explore BrewDesk',
+  },
 ]; 
