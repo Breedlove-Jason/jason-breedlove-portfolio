@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -14,20 +14,20 @@ import {
   Braces,
   Network,
   Wallet,
-} from "lucide-react";
-import { projects } from "../data/projects";
-import type { Project } from "../data/projects";
-import type { LucideIcon } from "lucide-react";
-import SectionHeading from "./SectionHeading.tsx";
+} from 'lucide-react';
+import { projects } from '../data/projects';
+import type { Project } from '../data/projects';
+import type { LucideIcon } from 'lucide-react';
+import SectionHeading from './SectionHeading.tsx';
 
 const filters = [
-  "All work",
-  "Full stack",
-  "Mobile & systems",
-  "Python & data",
-  "Developer tools",
-  "Web apps",
-  "The Arcade",
+  'All work',
+  'Full stack',
+  'Mobile & systems',
+  'Python & data',
+  'Developer tools',
+  'Web apps',
+  'The Arcade',
 ];
 const icons: Record<string, LucideIcon> = {
   memorybeam: Smartphone,
@@ -69,14 +69,14 @@ function ProjectDetails({ project }: { project: Project }) {
 }
 
 export default function Projects() {
-  const [filter, setFilter] = useState("All work");
+  const [filter, setFilter] = useState('All work');
   const visibleProjects = projects.filter(
-    (project) => filter === "All work" || project.category === filter,
+    (project) => filter === 'All work' || project.category === filter,
   );
   return (
     <section className="section shell projects-section" id="projects">
       <SectionHeading
-        number="01"
+        number="04"
         label="SELECTED ENGINEERING"
         title={
           <>
@@ -106,7 +106,7 @@ export default function Projects() {
           ))}
         </div>
         <span className="project-count" aria-live="polite">
-          {String(visibleProjects.length).padStart(2, "0")} PROJECTS
+          {String(visibleProjects.length).padStart(2, '0')} PROJECTS
         </span>
       </div>
       <div className="project-grid">
@@ -160,7 +160,7 @@ export default function Projects() {
                 ) : (
                   <a className="source-link" href="#contact">
                     <MessageSquare size={16} aria-hidden="true" />
-                    Discuss this project{" "}
+                    Discuss this project{' '}
                     <ArrowUpRight size={15} aria-hidden="true" />
                   </a>
                 )}
@@ -172,7 +172,7 @@ export default function Projects() {
                     rel="noopener noreferrer"
                   >
                     <ExternalLink size={16} aria-hidden="true" />
-                    {project.liveLabel || "Visit project"}{" "}
+                    {project.liveLabel || 'Visit project'}{' '}
                     <ArrowUpRight size={15} aria-hidden="true" />
                   </a>
                 )}

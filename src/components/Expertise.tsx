@@ -60,7 +60,7 @@ export default function Expertise() {
     <section className="expertise-wrap">
       <div id="expertise" className="section shell">
         <SectionHeading
-          number="02"
+          number="01"
           label="TECHNICAL RANGE"
           title="From the interface down."
         >

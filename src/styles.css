@@ -624,8 +624,24 @@
     color: #9caabf;
   }
   .projects-section {
-    border-top: 0;
+    border-top: 1px solid var(--border);
     padding-top: 92px;
+  }
+  .profile-highlights {
+    padding-block: 76px 0;
+  }
+  .profile-highlights-grid {
+    @apply grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.75fr);
+    gap: 25px;
+    align-items: stretch;
+  }
+  .profile-highlights .valor-callout {
+    margin-top: 0;
+    height: 100%;
+  }
+  .profile-highlights .education-card {
+    height: 100%;
   }
   .project-toolbar {
     @apply flex;
@@ -1047,8 +1063,7 @@
   }
   .about-layout {
     @apply grid;
-    grid-template-columns: 1.25fr 1fr;
-    gap: 95px;
+    grid-template-columns: minmax(0, 780px);
     @apply items-start;
   }
   .about-layout .section-heading {
@@ -1537,6 +1552,12 @@
     }
     .projects-section {
       padding-top: 60px;
+    }
+    .profile-highlights {
+      padding-top: 52px;
+    }
+    .profile-highlights-grid {
+      grid-template-columns: 1fr;
     }
     .project-toolbar {
       @apply block;

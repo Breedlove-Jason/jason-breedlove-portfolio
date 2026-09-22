@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 const links = [
-  ['01', 'Work', '#projects'],
-  ['02', 'Expertise', '#expertise'],
-  ['03', 'Service', '#experience'],
-  ['04', 'About', '#about'],
+  ['01', 'Expertise', '#expertise'],
+  ['02', 'Service', '#experience'],
+  ['03', 'About', '#about'],
+  ['04', 'Work', '#projects'],
 ];
 
 export default function Header() {

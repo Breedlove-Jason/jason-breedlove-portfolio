@@ -1,4 +1,4 @@
-import { GraduationCap, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import SectionHeading from './SectionHeading.tsx';
 
 export default function About() {
@@ -7,7 +7,7 @@ export default function About() {
       <div className="about-layout">
         <div>
           <SectionHeading
-            number="04"
+            number="03"
             label="THE PERSON BEHIND THE WORK"
             title={
               <>
@@ -35,46 +35,6 @@ export default function About() {
           <a className="text-link" href="#contact">
             Let’s talk engineering <ArrowUpRight size={18} aria-hidden="true" />
           </a>
-        </div>
-        <div className="education-card">
-          <div className="education-top">
-            <GraduationCap size={27} strokeWidth={1.4} aria-hidden="true" />
-            <span>EDUCATION & CONTINUING STUDY</span>
-          </div>
-          <h3>Colorado Technical University</h3>
-          <div className="degree">
-            <span>BACHELOR’S DEGREE</span>
-            <strong>Computer Security</strong>
-            <p className="degree-honors">
-              President’s List & Dean’s List · Multiple terms
-            </p>
-          </div>
-          <div className="degree">
-            <span>ASSOCIATE’S DEGREE</span>
-            <strong>Information Technology</strong>
-            <p className="degree-honors">Graduated with honors</p>
-          </div>
-          <p className="education-focus">
-            Studies in information technology, security, and network management.
-          </p>
-          <div className="academic-honors">
-            <strong>
-              4.0<span>GPA</span>
-            </strong>
-            <div>
-              President’s List
-              <br />
-              Dean’s List
-            </div>
-          </div>
-          <div className="continuing-study">
-            <span>ONLINE BOOTCAMPS</span>
-            <p>
-              Python · JavaScript · React
-              <br />
-              Web Design · Linux Administration
-            </p>
-          </div>
         </div>
       </div>
     </section>

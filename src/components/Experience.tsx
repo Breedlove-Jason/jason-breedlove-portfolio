@@ -1,4 +1,4 @@
-import { Award, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import SectionHeading from './SectionHeading.tsx';
 
 const roles = [
@@ -40,7 +40,7 @@ export default function Experience() {
   return (
     <section id="experience" className="section shell">
       <SectionHeading
-        number="03"
+        number="02"
         label="EXPERIENCE & SERVICE"
         title="Responsibility, earned."
       >
@@ -84,25 +84,6 @@ export default function Experience() {
             </article>
           ))}
         </div>
-      </div>
-      <div className="valor-callout">
-        <div className="valor-symbol">
-          <Award size={47} strokeWidth={1.1} aria-hidden="true" />
-        </div>
-        <div className="valor-copy">
-          <p className="eyebrow">MILITARY HONORS / VALOR</p>
-          <h3>Composure when it mattered most.</h3>
-          <p>
-            Awarded the <strong>Army Commendation Medal for Valor</strong> for
-            calmness and bravery under intense enemy fire. A defining part of an
-            honorable and highly decorated military career.
-          </p>
-        </div>
-        <span className="valor-side" aria-hidden="true">
-          COURAGE
-          <br />
-          UNDER FIRE
-        </span>
       </div>
     </section>
   );
