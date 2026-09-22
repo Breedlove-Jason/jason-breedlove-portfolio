@@ -632,13 +632,9 @@
   }
   .profile-highlights-grid {
     @apply grid;
-    grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.75fr);
-    gap: 25px;
+    grid-template-columns: minmax(280px, 0.85fr) minmax(370px, 1.15fr);
+    gap: 32px;
     align-items: stretch;
-  }
-  .profile-highlights .valor-callout {
-    margin-top: 0;
-    height: 100%;
   }
   .profile-highlights .education-card {
     height: 100%;
@@ -1010,56 +1006,46 @@
     line-height: 1.8;
     max-width: 670px;
   }
-  .valor-callout {
+  .honors-bar {
     @apply flex;
     @apply items-center;
-    gap: 33px;
-    margin-top: 60px;
-    padding: 35px 40px;
-    border: 1px solid #695033;
-    background: linear-gradient(105deg, #31261966, #171921 70%);
-    @apply rounded;
+    align-self: center;
+    gap: 22px;
+    padding: 24px 27px;
+    border-block: 1px solid #695033;
+    border-left: 4px solid var(--gold);
+    background: linear-gradient(105deg, #31261952, #121923 78%);
   }
-  .valor-symbol {
+  .honors-icon {
     @apply shrink-0;
     @apply grid;
     place-items: center;
-    width: 80px;
-    height: 100px;
-    border-right: 1px solid #6d5636;
-    padding-right: 29px;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #71593a;
+    @apply rounded-full;
     color: var(--gold);
   }
-  .valor-copy {
-    max-width: 740px;
-  }
-  .valor-copy .eyebrow {
+  .honors-copy .eyebrow {
     color: var(--gold);
     font-size: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
-  .valor-copy h3 {
-    font-size: 26px;
+  .honors-copy h3 {
+    font-size: 21px;
     @apply font-medium;
-    letter-spacing: -0.7px;
-    margin-bottom: 13px;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
   }
-  .valor-copy > p:last-child {
+  .honors-copy > p:last-child {
     margin: 0;
     color: #bab8b5;
-    font-size: 14px;
-    line-height: 1.8;
+    font-size: 13px;
+    line-height: 1.65;
   }
-  .valor-copy strong {
+  .honors-copy strong {
     color: #e6cfad;
     @apply font-medium;
-  }
-  .valor-side {
-    font: 12px/2 var(--display);
-    letter-spacing: 2px;
-    color: #c4a479;
-    margin-left: auto;
-    @apply shrink-0;
   }
   .about-layout {
     @apply grid;
@@ -1472,9 +1458,6 @@
       gap: 55px;
       grid-template-columns: 0.8fr 1.7fr;
     }
-    .valor-side {
-      @apply hidden;
-    }
     .about-layout {
       gap: 50px;
     }
@@ -1687,23 +1670,12 @@
     .role-description {
       font-size: 16px;
     }
-    .valor-callout {
-      padding: 25px;
-      @apply block;
-      margin-top: 37px;
+    .honors-bar {
+      padding: 22px;
+      gap: 17px;
     }
-    .valor-symbol {
-      width: 45px;
-      height: 45px;
-      border: 0;
-      padding: 0;
-      margin-bottom: 22px;
-    }
-    .valor-copy h3 {
-      font-size: 24px;
-    }
-    .valor-copy > p:last-child {
-      font-size: 14px;
+    .honors-copy h3 {
+      font-size: 20px;
     }
     .about-layout {
       grid-template-columns: 1fr;

@@ -47,11 +47,11 @@ export function EducationHighlight() {
 
 export function ValorHighlight() {
   return (
-    <article className="valor-callout">
-      <div className="valor-symbol">
-        <Award size={47} strokeWidth={1.1} aria-hidden="true" />
+    <article className="honors-bar">
+      <div className="honors-icon">
+        <Award size={28} strokeWidth={1.3} aria-hidden="true" />
       </div>
-      <div className="valor-copy">
+      <div className="honors-copy">
         <p className="eyebrow">MILITARY HONORS / VALOR</p>
         <h3>Composure when it mattered most.</h3>
         <p>
@@ -60,11 +60,6 @@ export function ValorHighlight() {
           honorable and highly decorated military career.
         </p>
       </div>
-      <span className="valor-side" aria-hidden="true">
-        COURAGE
-        <br />
-        UNDER FIRE
-      </span>
     </article>
   );
 }
