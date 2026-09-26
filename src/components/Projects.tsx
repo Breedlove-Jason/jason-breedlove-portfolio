@@ -14,8 +14,9 @@ import {
   Braces,
   Network,
   Wallet,
+  Keyboard,
 } from 'lucide-react';
-import { projects } from '../data/projects';
+import { projects } from '../data/portfolioProjects';
 import type { Project } from '../data/projects';
 import type { LucideIcon } from 'lucide-react';
 import SectionHeading from './SectionHeading.tsx';
@@ -31,6 +32,7 @@ const filters = [
 ];
 const icons: Record<string, LucideIcon> = {
   memorybeam: Smartphone,
+  keyforge: Keyboard,
   ledger: Wallet,
   cryptoforge: Network,
   envranger: Terminal,
