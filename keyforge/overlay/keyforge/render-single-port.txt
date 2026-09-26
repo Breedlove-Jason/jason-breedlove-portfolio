@@ -11,6 +11,27 @@ function startSinglePort() {
       .filter((value): value is string => Boolean(value))
       .map((value) => new URL(value).origin),
   );
+  const originsByHost = new Map(
+    [...allowedOrigins].map((value) => {
+      const origin = new URL(value);
+      return [origin.host.toLowerCase(), origin] as const;
+    }),
+  );
+  // fastr expects forwarded protocol and host together. Render may supply only
+  // the protocol. Derive both from a configured origin matched to the real Host
+  // header, never from arbitrary client-supplied forwarded-host values.
+  const normalizeForwardedOrigin = (
+    headers: Record<string, string | string[] | undefined>,
+  ): boolean => {
+    const host = headers.host;
+    const origin = typeof host === "string"
+      ? originsByHost.get(host.toLowerCase())
+      : undefined;
+    if (!origin) return false;
+    headers["x-forwarded-host"] = origin.host;
+    headers["x-forwarded-proto"] = origin.protocol.slice(0, -1);
+    return true;
+  };
   let stopping = false;
   const choose = (url: string = "/") =>
     (url.split("?")[0] || "/").startsWith("/_/game/") ? game : main;
@@ -30,6 +51,11 @@ function startSinglePort() {
       }));
       return;
     }
+    if (!normalizeForwardedOrigin(req.headers)) {
+      res.writeHead(400, { "Content-Type": "text/plain; charset=utf-8" });
+      res.end("Bad Request");
+      return;
+    }
     choose(req.url)(req, res);
   });
   server.on("upgrade", (req, socket, head) => {
@@ -39,6 +65,10 @@ function startSinglePort() {
     }
     if (req.headers.origin && !allowedOrigins.has(req.headers.origin)) {
       socket.end("HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n");
+      return;
+    }
+    if (!normalizeForwardedOrigin(req.headers)) {
+      socket.end("HTTP/1.1 400 Bad Request\r\nConnection: close\r\n\r\n");
       return;
     }
     if (head.length) socket.unshift(head);
