@@ -2,6 +2,8 @@
 """Reconstruct and lock the full KeyForge fork. Requires Git, Python, and Node/npm."""
 from pathlib import Path
 import argparse
+import base64
+import hashlib
 import json
 import shutil
 import subprocess
@@ -35,12 +37,23 @@ if anchor not in text:
     raise SystemExit('Code Lab navigation anchor missing; no blind edit performed.')
 text = text.replace(anchor, '      title: defineMessage({ id: "keyforge.codeLab", defaultMessage: "Code Lab" }),\n' + anchor, 1)
 pages.write_text(text)
+# The upstream production transformer hashes IDs and strips default messages.
+# Add the new branded label to both source catalogs and compiled ICU AST catalogs.
+message_id = base64.b64encode(hashlib.sha512(b'keyforge.codeLab').digest()).decode()[:8]
+for catalog in (dest / 'packages/keybr-intl/translations').glob('*.json'):
+    messages = json.loads(catalog.read_text())
+    messages['keyforge.codeLab'] = 'Code Lab'
+    catalog.write_text(json.dumps(messages, ensure_ascii=False, indent=2) + '\n')
+for catalog in (dest / 'packages/keybr-intl/lib/messages').glob('*.json'):
+    messages = json.loads(catalog.read_text())
+    messages[message_id] = [{'type': 0, 'value': 'Code Lab'}]
+    catalog.write_text(json.dumps(messages, ensure_ascii=False, separators=(',', ':')) + '\n')
 package = dest / 'package.json'
 data = json.loads(package.read_text())
 data['scripts']['precompile'] = 'node keyforge/prepare-build.mjs'
-# GHSA-ph9p-34f9-6g65 is fixed in tmp 0.2.6. Only the transitive build-tool
-# dependency is overridden; the rest of the pinned upstream lock is retained.
-data.setdefault('overrides', {})['tmp'] = '0.2.6'
+# tmp 0.2.7 fixes GHSA-7c78-jf6q-g5cm as well as the earlier path-traversal issue.
+# Keep the rest of the pinned upstream dependency graph unchanged where possible.
+data.setdefault('overrides', {})['tmp'] = '0.2.7'
 package.write_text(json.dumps(data, indent=2) + '\n')
 subprocess.run(['npm', 'install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund'], cwd=dest, check=True)
 (dest / 'verification').mkdir(exist_ok=True)
