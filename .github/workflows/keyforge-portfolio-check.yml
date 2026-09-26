@@ -1,0 +1,55 @@
+name: KeyForge portfolio launch checks
+on:
+  push:
+    branches: [feature/keyforge-portfolio-launch]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24.x'
+          package-manager-cache: false
+      - name: Install pinned package manager and locked dependencies
+        run: |
+          npm install --global pnpm@11.19.0
+          pnpm install --frozen-lockfile
+      - name: Check project ordering, IDs, and launch destination
+        run: |
+          node --import tsx --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { projects as originals } from './src/data/projects.ts';
+          import { projects, keyforgeProject } from './src/data/portfolioProjects.ts';
+          assert.equal(projects.length, originals.length + 1);
+          assert.equal(new Set(projects.map(p => p.id)).size, projects.length);
+          assert.equal(projects[0].id, 'memorybeam');
+          assert.equal(projects[1].id, 'keyforge');
+          for (const original of originals) assert(projects.some(p => p.id === original.id));
+          assert.equal(new Set(projects.map(p => p.number)).size, projects.length);
+          assert.equal(keyforgeProject.liveUrl, 'https://jasonbreedlove.io/');
+          assert.equal(keyforgeProject.category, 'Developer tools');
+          console.log('Project ordering, original IDs, unique numbers, category and .io destination passed.');
+          JS
+      - name: Typecheck and build the portfolio
+        run: pnpm build
+      - name: Run existing contact API tests
+        run: pnpm test
+      - name: Inspect current public launch state without changing it
+        run: |
+          echo 'Current Render health:'
+          curl --fail --silent --show-error --max-time 30 https://keyforge-va3d.onrender.com/healthz
+          echo
+          echo 'Current .io nameservers:'
+          dig +short @1.1.1.1 jasonbreedlove.io NS
+          echo 'Current .io apex destination:'
+          dig +short @1.1.1.1 jasonbreedlove.io A
+          echo 'Current www destination:'
+          dig +short @1.1.1.1 www.jasonbreedlove.io CNAME
+          echo 'Inspection only. No service, DNS record, domain registration or production branch was changed.'
