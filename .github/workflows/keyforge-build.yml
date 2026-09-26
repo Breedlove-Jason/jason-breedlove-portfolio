@@ -1,0 +1,28 @@
+name: KeyForge source preparation
+on:
+  push:
+    branches: [feature/keyforge-typing]
+    paths: ['.github/workflows/keyforge-build.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Retrieve pinned Keybr source
+        run: |
+          git clone --no-checkout https://github.com/aradzie/keybr.com.git keybr-source
+          cd keybr-source
+          git checkout --detach e9c11fea284b8c861547173639580fe1442621b7
+          git rev-parse HEAD > UPSTREAM_COMMIT
+          rm -rf .git
+      - name: Preserve complete upstream source and license
+        uses: actions/upload-artifact@v4
+        with:
+          name: keybr-pinned-source
+          path: keybr-source/
+          include-hidden-files: true
+          retention-days: 7
+          if-no-files-found: error
