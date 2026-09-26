@@ -16,9 +16,12 @@ jobs:
       NODE_COMPILE_CACHE: /tmp/keyforge-node-cache
     steps:
       - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v5
         with:
           node-version: '26.x'
+          package-manager-cache: false
       - name: Reconstruct pinned fork with checked patches
         run: python3 keyforge/setup.py "$RUNNER_TEMP/keyforge-app"
       - name: Install locked dependencies
