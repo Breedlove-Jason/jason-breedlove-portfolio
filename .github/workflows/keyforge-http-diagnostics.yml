@@ -1,0 +1,21 @@
+name: KeyForge public HTTP diagnostics
+on:
+  push:
+    branches: [feature/keyforge-typing]
+    paths: ['.github/workflows/keyforge-http-diagnostics.yml']
+  workflow_dispatch:
+permissions: {}
+jobs:
+  public-get-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Inspect public responses without changing hosting or DNS
+        shell: bash
+        run: |
+          set -euo pipefail
+          for path in /healthz / /code-lab/index.html /_/game/stats; do
+            echo "=== $path ==="
+            curl --silent --show-error --include --max-time 25 "https://keyforge-va3d.onrender.com$path" | sed -E '/^[Ss]et-[Cc]ookie:/d' | head -c 5000
+            echo
+          done
