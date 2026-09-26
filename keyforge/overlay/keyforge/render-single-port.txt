@@ -1,0 +1,70 @@
+
+function startSinglePort() {
+  Env.probeFilesSync();
+  const container = makeContainer();
+  const server = container.get(Server);
+  const sockets = container.get(WebSocketServer);
+  const main = container.get(Application, kMain).callback();
+  const game = container.get(Application, kGame).callback();
+  const allowedOrigins = new Set(
+    [process.env.APP_URL, process.env.RENDER_EXTERNAL_URL]
+      .filter((value): value is string => Boolean(value))
+      .map((value) => new URL(value).origin),
+  );
+  let stopping = false;
+  const choose = (url: string = "/") =>
+    (url.split("?")[0] || "/").startsWith("/_/game/") ? game : main;
+  server.on("request", (req, res) => {
+    if (req.url?.split("?")[0] === "/healthz") {
+      res.writeHead(stopping ? 503 : 200, {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "X-Content-Type-Options": "nosniff",
+      });
+      res.end(JSON.stringify({
+        status: stopping ? "stopping" : "ok",
+        storage: process.env.KEYFORGE_STORAGE_MODE,
+        accountsEnabled: process.env.KEYFORGE_ACCOUNTS_ENABLED === "true",
+        revision: (process.env.RENDER_GIT_COMMIT || "local").slice(0, 12),
+        transport: "single-port",
+      }));
+      return;
+    }
+    choose(req.url)(req, res);
+  });
+  server.on("upgrade", (req, socket, head) => {
+    if (stopping || req.url?.split("?")[0] !== "/_/game/server") {
+      socket.end("HTTP/1.1 404 Not Found\r\nConnection: close\r\n\r\n");
+      return;
+    }
+    if (req.headers.origin && !allowedOrigins.has(req.headers.origin)) {
+      socket.end("HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n");
+      return;
+    }
+    if (head.length) socket.unshift(head);
+    const res = new ServerResponse(req);
+    res.shouldKeepAlive = false;
+    game(req, res);
+  });
+  server.on("error", (error) => {
+    console.error("KeyForge HTTP server error", error);
+    process.exit(1);
+  });
+  const shutdown = () => {
+    if (stopping) return;
+    stopping = true;
+    const timeout = setTimeout(() => process.exit(1), 8000);
+    timeout.unref();
+    for (const client of sockets.clients) client.close(1012, "Server restarting");
+    server.close(() => {
+      void container.get(Knex).destroy().finally(() => process.exit(0));
+    });
+    server.closeIdleConnections();
+  };
+  process.once("SIGTERM", shutdown);
+  process.once("SIGINT", shutdown);
+  container.get(Game).start();
+  server.listen(Env.getPort("PORT", 10000), "0.0.0.0", () => {
+    console.info("KeyForge website and multiplayer ready on one public port.");
+  });
+}
