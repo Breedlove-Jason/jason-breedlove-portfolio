@@ -1,0 +1,76 @@
+name: KeyForge deployed Render checks
+on:
+  push:
+    branches: [feature/keyforge-typing]
+    paths: ['.github/workflows/keyforge-render-live.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-origin-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      KEYFORGE_BASE_URL: https://keyforge-va3d.onrender.com
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '26.10.0'
+          package-manager-cache: false
+      - name: Install browser verification tools
+        run: |
+          npm install --global agent-browser
+          agent-browser install --with-deps
+          python3 -m pip install playwright
+          python3 -m playwright install --with-deps chromium
+      - name: Verify the deployed service is healthy
+        run: |
+          mkdir -p verification
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { writeFileSync } from 'node:fs';
+          const base = process.env.KEYFORGE_BASE_URL;
+          let health;
+          for (let attempt = 0; attempt < 36; attempt++) {
+            try {
+              const response = await fetch(base + '/healthz', { signal: AbortSignal.timeout(10000) });
+              if (response.ok) {
+                const data = await response.json();
+                if (data.status === 'ok' && data.transport === 'single-port') { health = data; break; }
+              }
+            } catch {}
+            await new Promise(resolve => setTimeout(resolve, 5000));
+          }
+          assert(health, 'Deployed service did not become healthy');
+          assert.equal(health.accountsEnabled, false);
+          const results = [];
+          for (const path of ['/', '/typing-test', '/profile', '/code-lab', '/code-lab/index.html', '/multiplayer']) {
+            const response = await fetch(base + path, { signal: AbortSignal.timeout(20000) });
+            assert.equal(response.status, 200, path);
+            results.push({ path, status: response.status });
+          }
+          writeFileSync('verification/deployed-health.json', JSON.stringify({ base, health, results, checkedAt: new Date().toISOString() }, null, 2));
+          console.log(JSON.stringify({ health, results }, null, 2));
+          JS
+      - name: Agent browser visual and secure WebSocket checks
+        run: |
+          agent-browser open "$KEYFORGE_BASE_URL"
+          agent-browser wait --load networkidle
+          agent-browser snapshot -i > verification/agent-browser-native-snapshot.txt
+          agent-browser screenshot verification/render-native-practice.png
+          agent-browser eval "document.body.innerText.trim().length > 100 ? 'HAS_CONTENT' : 'BLANK'" > verification/agent-browser-content.txt
+          agent-browser eval "new Promise((resolve, reject) => { const ws = new WebSocket(location.origin.replace(/^http/, 'ws') + '/_/game/server'); const timer = setTimeout(() => { ws.close(); reject(new Error('WebSocket connection timeout')); }, 15000); ws.onopen = () => { clearTimeout(timer); ws.close(); resolve('Secure same-origin racing WebSocket opened'); }; ws.onerror = () => { clearTimeout(timer); reject(new Error('WebSocket failed')); }; })" > verification/secure-websocket.txt
+          agent-browser close
+      - name: Real browser typing, navigation and storage checks
+        run: python3 keyforge/overlay/tests-keyforge/live-browser.py
+      - name: Preserve deployment verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keyforge-deployed-render-evidence
+          path: verification/
+          retention-days: 7
+          if-no-files-found: warn
