@@ -1,0 +1,56 @@
+"""Live-origin smoke checks with real browser storage and no storage fixtures."""
+import json
+import os
+from pathlib import Path
+from playwright.sync_api import sync_playwright
+BASE = os.environ.get('KEYFORGE_BASE_URL', 'http://127.0.0.1:3000')
+OUT = Path('verification')
+OUT.mkdir(exist_ok=True)
+checks = []
+def check(name, value):
+    assert value, name
+    checks.append(name)
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=True)
+    page = browser.new_page(viewport={'width': 1440, 'height': 1100})
+    errors = []
+    page.on('pageerror', lambda e: errors.append(str(e)))
+    response = page.goto(BASE + '/code-lab/index.html', wait_until='networkidle')
+    check('Code Lab HTTP 200', response.status == 200)
+    page.locator('#language').wait_for()
+    check('16 language tracks', page.locator('#language option').count() == 16)
+    check('seven practice paths', page.locator('[data-drill]').count() == 7)
+    page.screenshot(path=str(OUT / 'live-desktop.png'), full_page=True)
+    page.locator('[data-drill="custom"]').click()
+    page.locator('#custom-code').fill('a\n  b')
+    page.locator('#apply-custom').click()
+    page.keyboard.type('x')
+    check('error counted without advancing', page.locator('.typed').count() == 0)
+    page.keyboard.type('a', delay=50)
+    page.keyboard.press('Enter')
+    page.keyboard.type('  b', delay=50)
+    page.locator('#result').wait_for(state='visible')
+    row = page.evaluate("JSON.parse(localStorage.getItem('keyforge.code-lab.history.v1')).history[0]")
+    check('real storage contains measured result', row['metrics']['correct'] == 5 and row['metrics']['errors'] == 1)
+    page.reload(wait_until='networkidle')
+    page.locator('[data-view="insights"]').click()
+    check('reload preserves history', page.locator('tbody tr').count() == 1)
+    check('no Code Lab JavaScript errors', not errors)
+    page.locator('[data-view="practice"]').click()
+    page.set_viewport_size({'width': 390, 'height': 844})
+    check('mobile does not overflow horizontally', page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
+    page.screenshot(path=str(OUT / 'live-mobile.png'), full_page=True)
+    page.set_viewport_size({'width': 1440, 'height': 1100})
+    page.goto(BASE + '/code-lab', wait_until='networkidle')
+    frame = page.frame_locator('iframe[title="KeyForge Code Lab: developer typing practice"]')
+    frame.locator('#language').wait_for()
+    check('native app route embeds functioning Code Lab', frame.locator('#language option').count() == 16)
+    page.screenshot(path=str(OUT / 'native-code-lab.png'), full_page=True)
+    page.goto(BASE + '/', wait_until='networkidle')
+    page.get_by_role('link', name='Code Lab', exact=True).first.wait_for()
+    check('normal app retains navigation to Code Lab', page.get_by_role('link', name='Code Lab', exact=True).count() >= 1)
+    page.screenshot(path=str(OUT / 'native-practice.png'), full_page=True)
+    check('no native application JavaScript errors', not errors)
+    browser.close()
+(OUT / 'live-browser-results.json').write_text(json.dumps({'mode': 'live-origin', 'passed': len(checks), 'checks': checks, 'console_errors': errors}, indent=2))
+print(json.dumps({'passed': len(checks), 'mode': 'live-origin'}, indent=2))

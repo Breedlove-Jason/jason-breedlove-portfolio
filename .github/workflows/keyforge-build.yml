@@ -1,28 +1,85 @@
-name: KeyForge source preparation
+name: KeyForge full fork verification
 on:
   push:
     branches: [feature/keyforge-typing]
-    paths: ['.github/workflows/keyforge-build.yml']
+    paths: ['keyforge/**', '.github/workflows/keyforge-build.yml']
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  source:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
+    env:
+      HUSKY: '0'
+      DATABASE_CLIENT: sqlite
+      NODE_COMPILE_CACHE: /tmp/keyforge-node-cache
     steps:
-      - name: Retrieve pinned Keybr source
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '26.x'
+      - name: Reconstruct pinned fork with checked patches
+        run: python3 keyforge/setup.py "$RUNNER_TEMP/keyforge-app"
+      - name: Install locked dependencies
+        working-directory: ${{ runner.temp }}/keyforge-app
+        run: npm ci
+      - name: Compile all TypeScript packages
+        working-directory: ${{ runner.temp }}/keyforge-app
+        run: npm run compile
+      - name: Test Code Lab engine
+        working-directory: ${{ runner.temp }}/keyforge-app
         run: |
-          git clone --no-checkout https://github.com/aradzie/keybr.com.git keybr-source
-          cd keybr-source
-          git checkout --detach e9c11fea284b8c861547173639580fe1442621b7
-          git rev-parse HEAD > UPSTREAM_COMMIT
-          rm -rf .git
-      - name: Preserve complete upstream source and license
+          mkdir -p verification
+          set -o pipefail
+          npm run test:code-lab | tee verification/engine-results.txt
+      - name: Build complete production application
+        working-directory: ${{ runner.temp }}/keyforge-app
+        run: npm run build -- --no-stats
+      - name: Start safe server and verify native routes
+        working-directory: ${{ runner.temp }}/keyforge-app
+        env:
+          NODE_ENV: production
+          APP_URL: http://127.0.0.1:3000/
+          COOKIE_DOMAIN: 127.0.0.1
+          COOKIE_SECURE: 'false'
+          COOKIE_NAME: keyforge_test_session
+          KEYFORGE_ACCOUNTS_ENABLED: 'false'
+          DATA_DIR: ${{ runner.temp }}/keyforge-data
+          DATABASE_FILENAME: ${{ runner.temp }}/keyforge-data/database.sqlite
+          SERVER_PORT: '3000'
+          SERVER_PORT_WS: '3001'
+          MAIL_DOMAIN: localhost
+          MAIL_KEY: ''
+        run: |
+          mkdir -p "$DATA_DIR" verification
+          npm run start:production > verification/server.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:3000/code-lab/index.html >/dev/null; then break; fi
+            sleep 2
+          done
+          curl --fail --silent http://127.0.0.1:3000/code-lab/index.html >/dev/null
+          curl --fail --silent http://127.0.0.1:3000/ >/dev/null
+          curl --fail --silent http://127.0.0.1:3000/code-lab >/dev/null
+          curl --fail --silent http://127.0.0.1:3000/multiplayer >/dev/null
+          curl --fail --silent http://127.0.0.1:3001/_/game/stats > verification/game-stats.json
+          node --input-type=module <<'JS'
+          const socket = new WebSocket('ws://127.0.0.1:3001/_/game/server');
+          const timeout = setTimeout(() => { console.error('Native game websocket timeout'); process.exit(1); }, 10000);
+          socket.addEventListener('open', () => { clearTimeout(timeout); console.log('Native game WebSocket accepted a connection'); socket.close(); });
+          socket.addEventListener('error', error => { console.error(error); process.exit(1); });
+          JS
+      - name: Browser checks on real origin
+        working-directory: ${{ runner.temp }}/keyforge-app
+        run: |
+          python3 -m pip install playwright
+          python3 -m playwright install --with-deps chromium
+          python3 tests-keyforge/live-browser.py
+      - name: Preserve verification evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: keybr-pinned-source
-          path: keybr-source/
-          include-hidden-files: true
+          name: keyforge-verification
+          path: ${{ runner.temp }}/keyforge-app/verification/
           retention-days: 7
-          if-no-files-found: error
+          if-no-files-found: warn
