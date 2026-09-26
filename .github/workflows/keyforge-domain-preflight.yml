@@ -1,0 +1,29 @@
+name: KeyForge domain preflight
+on:
+  push:
+    branches: [feature/keyforge-typing]
+    paths: ['.github/workflows/keyforge-domain-preflight.yml']
+  workflow_dispatch:
+permissions: {}
+jobs:
+  inspect-public-dns:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Read public domain records without changing services or DNS
+        shell: bash
+        run: |
+          set -euo pipefail
+          for resolver in 1.1.1.1 8.8.8.8; do
+            echo "Resolver: $resolver"
+            for type in NS SOA A AAAA MX TXT CAA; do
+              echo "jasonbreedlove.io $type"
+              dig +time=3 +tries=1 +noall +answer +comments @$resolver jasonbreedlove.io $type
+            done
+            for type in CNAME A AAAA; do
+              echo "www.jasonbreedlove.io $type"
+              dig +time=3 +tries=1 +noall +answer +comments @$resolver www.jasonbreedlove.io $type
+            done
+          done
+          echo 'Public lookups only; this is not a complete DNS zone export.'
+          echo 'No hosting, domain assignments, or DNS records were modified.'
