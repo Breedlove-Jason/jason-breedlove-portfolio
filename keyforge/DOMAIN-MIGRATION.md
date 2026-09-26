@@ -1,12 +1,37 @@
-# KeyForge: proposed jasonbreedlove.io migration
+# KeyForge: jasonbreedlove.io launch and Netlify retirement
 
-Status: prepared, NOT deployed. No hosting service, paid resource, DNS record, domain assignment, or portfolio master content has been changed for this migration.
+## Owner decisions
 
-## Observed configuration, September 26, 2026
+On September 26, 2026, the owner approved using the Render workspace **Jason Breedlove Projects** (`tea-danggj6k1f9s738ljc1g`) for a $7/month Starter web service and a 1 GB persistent disk at the previously quoted $0.25/month. A larger paid plan requires separate approval. This is an approved base configuration, not a guarantee of total billing or sufficient capacity for every workload.
 
-The connected Netlify project reader identifies `jbreedlove-clothing` (site `e178fb55-eb61-4d44-a914-939844bcf45b`) with primary URL `https://jasonbreedlove.io` and ready deployment `66f637af451f190008949c3f`.
+The owner subsequently authorized deleting the old Netlify project **jbreedlove-clothing**, site ID `e178fb55-eb61-4d44-a914-939844bcf45b`. It is not necessary to preserve that deployed project. This does not authorize deleting its GitHub repository, other Netlify projects, the domain registration, a shared DNS zone, mail records, or the portfolio.
 
-Read-only DNS workflow https://github.com/Breedlove-Jason/jason-breedlove-portfolio/actions/runs/36273117644, job 108490703068, queried Cloudflare and Google resolvers. Both returned:
+All KeyForge pages and public racing traffic are to use **jasonbreedlove.io**. The existing portfolio at **jasonbreedlove.dev** remains unchanged. No KeyForge section is to remain hosted at a Netlify project or the earlier proposed typing.jasonbreedlove.dev address.
+
+## Current status
+
+- A Starter web-service creation request returned HTTP 402: payment information is required. Render directed the owner to https://dashboard.render.com/billing.
+- A subsequent connected Render service listing did not contain KeyForge. No KeyForge service ID or assigned hostname has been obtained.
+- The connected Netlify project reader still returns the clothing project with primary URL https://jasonbreedlove.io and ready deploy `66f637af451f190008949c3f`.
+- No DNS or domain assignment has been changed. The Netlify project has not been deleted.
+- The current Netlify connector does not expose project deletion. No authenticated Netlify CLI session or token is available in this working environment. Deletion must use an authorized dashboard/CLI session, not an invented connector action.
+- The Render-specific single-port server and build integration are committed to feature/keyforge-typing. Production deployment, a real persistent-disk mount, custom-domain validation, and issued TLS certificates have not been verified.
+
+## Intended public routing
+
+- https://jasonbreedlove.io/ : ordinary typing practice.
+- https://jasonbreedlove.io/typing-test : typing tests.
+- https://jasonbreedlove.io/profile : ordinary typing statistics.
+- https://jasonbreedlove.io/code-lab : separate developer Code Lab and its statistics.
+- https://jasonbreedlove.io/multiplayer : native racing.
+- wss://jasonbreedlove.io/_/game/server : racing WebSocket on the same origin.
+- https://www.jasonbreedlove.io/ : redirect to the root domain, preserving paths.
+
+An assigned onrender.com URL may be used for pre-cutover verification. It is a hosting address, not a different intended public home for a KeyForge section.
+
+## Observed DNS, September 26, 2026
+
+Read-only workflow https://github.com/Breedlove-Jason/jason-breedlove-portfolio/actions/runs/36273117644 queried Cloudflare and Google public resolvers. Both returned:
 
 | Name | Type | Observed answer | TTL |
 | --- | --- | --- | --- |
@@ -14,44 +39,34 @@ Read-only DNS workflow https://github.com/Breedlove-Jason/jason-breedlove-portfo
 | www.jasonbreedlove.io | CNAME | jbreedlove-clothing.netlify.app | 14400 seconds |
 | jasonbreedlove.io | NS | dns1 through dns4.p04.nsone.net; ns01 through ns04.squarespacedns.com | 3600 seconds |
 
-No apex AAAA, MX, TXT, or CAA answers were returned. This is not a complete zone export and is not proof that no mail-related or other subdomain records exist. The www AAAA query follows the Netlify CNAME; those target IPv6 addresses are not independent records to delete in this zone.
+No apex AAAA, MX, TXT, or CAA answers were returned. This is not a complete DNS-zone export. It does not prove that no mail-related or other subdomain records exist. The www AAAA response follows the Netlify CNAME; those target IPv6 addresses are not independent records in this zone.
 
-The nameserver families are compatible with Squarespace-managed DNS. They do not, by themselves, prove who the registrar is or indicate a broken delegation. Confirm the actual DNS control panel before making any change. Preserve nameservers, DNSSEC, mail records, and unrelated subdomains.
+Confirm the actual authoritative DNS dashboard before edits. Preserve nameservers, DNSSEC, mail records, and unrelated subdomains.
 
-## Intended routing
+## Cutover and deletion sequence
 
-- jasonbreedlove.io: ordinary KeyForge typing.
-- jasonbreedlove.io/code-lab: separate developer Code Lab.
-- jasonbreedlove.io/multiplayer: native racing.
-- www.jasonbreedlove.io: redirect to the root domain.
-- jasonbreedlove.dev: existing portfolio, unchanged.
+1. The owner adds payment information directly in the approved Render workspace. Never request payment-card details in chat. Recheck for an existing KeyForge service before retrying creation to prevent duplicates.
+2. Deploy and verify the separate KeyForge service using the committed Render build and start commands. Attach the approved 1 GB persistent disk and verify the application actually uses it. Turn off temporary-preview mode before treating server data as durable or enabling accounts.
+3. Test normal practice, tests, statistics, Code Lab, local persistence, multiplayer, health, and restart behavior on the assigned Render hostname. Arrange application-consistent database backups before storing important server-side user data.
+4. Add jasonbreedlove.io and its www redirect to the Render service. Back up the DNS zone. Lower relevant TTLs in advance if supported; cached four-hour records do not immediately expire when their TTL is lowered.
+5. After the target is ready, replace only the website DNS records using the actual values from Render. Render's previously documented apex address was 216.24.57.1; recheck it at cutover. Point www at the real assigned Render hostname. Never enter a placeholder into live DNS.
+6. Verify DNS, HTTPS, issued certificates, canonical redirects, same-origin WebSocket traffic, cookies, and application links. Configure APP_URL and origin allowlists for https://jasonbreedlove.io. Export/import browser-local practice data when changing origins; a domain change does not transfer local storage.
+7. After DNS no longer points to Netlify and prior caches have drained, **delete only jbreedlove-clothing**, site `e178fb55-eb61-4d44-a914-939844bcf45b`, as authorized. Confirm the selected site ID and that the delete operation does not include any shared DNS zone. Do not delete the GitHub repository or other projects. Removing obsolete DNS pointers before deletion avoids leaving a domain aimed at a deleted project.
+8. Verify that the old project is absent from Netlify and KeyForge still works at jasonbreedlove.io. Record the successful Render service/deploy IDs and domain verification results.
 
-## Cutover sequence
+## Continuous refinement
 
-1. Confirm Render workspace and recurring hosting budget. No workspace has been selected or service purchased yet.
-2. Prepare and deploy a separate service. The existing app uses internal HTTP port 3000 and game/WebSocket port 3001. Render exposes one public port; a tested internal proxy/shared-port entrypoint is required. The provided VPS Docker Compose/Caddy setup is not yet a verified Render deployment.
-3. Provide persistent storage for the current SQLite/data directory and arrange application-consistent backups. Do not depend on Render's ephemeral filesystem. Code Lab remains local browser storage; a server disk does not create cloud sync for Code Lab.
-4. Verify normal practice, statistics, Code Lab, persistence, and multiplayer on the assigned onrender.com host before changing production DNS.
-5. Add jasonbreedlove.io to the Render service, including its www alias/redirect. Back up the actual DNS zone. Lower relevant TTLs in advance if supported; cached four-hour records do not immediately expire just because the TTL is lowered.
-6. Only after the target is ready, replace the existing apex A with Render's currently documented 216.24.57.1, and the www CNAME with the actual assigned onrender.com hostname. Recheck Render's instructions at cutover. Never put a placeholder hostname into live DNS.
-7. Verify DNS, issued TLS certificates, HTTPS, www redirect, and application configuration for the .io origin. Recheck any cookie/origin/provider callback settings when accounts are enabled.
-8. Keep the clothing app available while caches drain. Then remove only the migrated custom-domain association from that Netlify project, and verify the project still works at its Netlify hostname without redirecting back to the migrated root. Do not delete its project, deployment, or repository.
+Code Lab's Continuous refinement path recalculates each next lesson from recent, language-specific key, pair, and allowlisted fragment performance. The 20-slot cycle reserves 12 repair, 5 review, and 3 exploration choices, with fallbacks when a group is empty. Learned patterns remain eligible. Recent performance and time since practice affect review priority.
 
-## Official references
+After three sufficiently long matching sessions, a median-based pace reference suggests a 3% stretch when the last three reach 98% accuracy, otherwise a gentler 95% baseline reference. This is a tunable coaching heuristic, not a promise of unlimited human speed gains. There is no fixed 200 WPM setting ceiling. Lessons never change beneath the active cursor. Daily challenges stay reproducible and ordinary Keybr progression remains separate.
+
+Older version-1 backups remain readable. Custom pasted code opts out of longer-fragment retention. Code Lab history is local to each browser/origin, not automatically synchronized by the server disk.
+
+## References
 
 - https://render.com/docs/configure-other-dns
 - https://render.com/docs/custom-domains
 - https://render.com/docs/websocket
 - https://render.com/docs/disks
 - https://render.com/pricing
-- https://support.squarespace.com/hc/en-us/articles/4404183898125-Review-change-or-reset-your-domain-s-nameservers
-
-Published Render pricing observed today starts at $7/month for a 512 MB paid web instance and $0.25/GB/month for an attached disk. That gives a $7.25/month base example with 1 GB storage, not a performance guarantee or all-in quote. Memory sizing, workspace charges, tax, usage overages, custom-domain allowance, and backup storage must be considered. No payment was authorized by this document.
-
-## Continuous refinement update
-
-Code Lab's former weak-key path is now Continuous refinement. It recalculates the next lesson using recent language-specific key, pair, and allowlisted fragment performance. A 20-slot cycle reserves 12 repair, 5 review, and 3 exploration choices with fallback when a group is empty. Learned patterns are not graduated out of the candidate pool. Recent sessions weigh more heavily; time since practice contributes to review priority. Measured keys outside the current snippet corpus and whitespace fragments remain eligible.
-
-After three sufficiently long matching sessions, a median-based pace reference suggests a 3% stretch when the last three reach 98% accuracy, otherwise a gentler 95% baseline reference. This is a configurable coaching heuristic, not a scientifically established optimum or a guarantee of continued speed gains. No fixed 200 WPM ceiling remains. The active lesson never changes under the cursor; new lessons are remixed from the existing corpus, not fetched from an external AI service. Daily challenges remain reproducible and ordinary Keybr progression remains separate.
-
-The added fragment records are optional in version-1 backups, preserving older records. Custom pasted code opts out of longer-fragment capture. Code Lab is still local to each browser/origin: export a JSON backup before changing browser, device, or hostname.
+- https://cli.netlify.com/commands/sites/
