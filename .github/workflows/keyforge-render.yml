@@ -1,0 +1,63 @@
+name: KeyForge Render verification
+on:
+  push:
+    branches: [feature/keyforge-typing]
+    paths: ['keyforge/render/**', 'keyforge/overlay/keyforge/*render*', 'keyforge/overlay/tests-keyforge/render*', '.github/workflows/keyforge-render.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: keyforge-render-verification
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '26.10.0'
+          package-manager-cache: false
+      - name: Build the exact Render application
+        run: bash keyforge/render/build.sh
+      - name: Start single-port anonymous preview
+        working-directory: .keyforge-runtime
+        env:
+          PORT: '10000'
+          RENDER_EXTERNAL_URL: http://127.0.0.1:10000
+          KEYFORGE_ALLOW_EPHEMERAL_PREVIEW: 'true'
+          KEYFORGE_ACCOUNTS_ENABLED: 'false'
+        run: |
+          mkdir -p verification
+          node --max-old-space-size=320 keyforge/render-start.mjs > verification/render-server.log 2>&1 &
+          for attempt in $(seq 1 45); do
+            if curl -fsS http://127.0.0.1:10000/healthz > verification/health.json; then break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:10000/healthz
+      - name: Full two-client race and origin validation
+        working-directory: .keyforge-runtime
+        run: ./node_modules/.bin/tsnode tests-keyforge/render-race.mjs
+      - name: Real browser checks
+        working-directory: .keyforge-runtime
+        env:
+          KEYFORGE_BASE_URL: http://127.0.0.1:10000
+        run: |
+          python3 -m pip install playwright==1.63.0
+          python3 -m playwright install --with-deps chromium
+          python3 tests-keyforge/live-browser.py
+          npx --yes agent-browser install --with-deps
+          npx --yes agent-browser open http://127.0.0.1:10000/
+          npx --yes agent-browser snapshot -i > verification/agent-browser.txt
+          npx --yes agent-browser screenshot verification/render-desktop.png
+          npx --yes agent-browser close
+      - name: Preserve evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keyforge-render-verification
+          path: .keyforge-runtime/verification/
+          retention-days: 7
