@@ -56,11 +56,18 @@ try {
       client.socket.send(client.codec.encode({ type: PLAYER_PROGRESS_ID, elapsed: Math.round(performance.now() - start), codePoint: char.codePointAt(0) }));
     }
   }
-  await waitFor(() => clients.every(c => c.state === GameState.FINISHED), 'Both clients completed the race');
+  await waitFor(() => clients.every(c => c.state === GameState.FINISHED), 'Both clients observed the completed race');
+  // Preserve Keybr Room.#isFinished: a race ends when only one unfinished racer
+  // remains. In a two-person race, only the winner is marked individually finished.
+  // The final remaining racer retains second place without a fabricated finish.
   const states = [...clients[0].world.playerState.values()];
-  assert.equal(states.filter(p => p.finished).length, 2);
-  assert.deepEqual(states.map(p => p.position).sort(), [1, 2]);
-  checks.push('Server recorded two finishers with distinct finishing positions');
+  assert.equal(states.length, 2);
+  assert.equal(states.filter(p => p.finished).length, 1);
+  assert.equal(states.find(p => p.finished).position, 1);
+  assert(states.every(p => !p.spectator && p.offset > 0));
+  assert.deepEqual(states.map(p => p.position).sort((a, b) => a - b), [1, 2]);
+  assert.deepEqual([...clients[1].world.playerState.values()], states);
+  checks.push('Both clients agree on the native winner and remaining-racer positions');
   const after = await (await fetch(statsUrl)).json();
   assert.equal(after.gamesCompleted, before.gamesCompleted + 1);
   checks.push('Game completion counter increased once');
@@ -74,8 +81,12 @@ try {
   assert(rejected);
   checks.push('Untrusted browser origin rejected');
   mkdirSync('verification', { recursive: true });
-  writeFileSync('verification/render-race.json', JSON.stringify({ passed: checks.length, checks, health, note: 'Automated protocol test; generated speeds are not human benchmarks.' }, null, 2));
+  writeFileSync('verification/render-race.json', JSON.stringify({ passed: checks.length, checks, health, note: 'Automated protocol test; generated speeds are not human benchmarks. Native rules end the race when one racer remains.' }, null, 2));
   console.log(JSON.stringify({ passed: checks.length, checks, health }, null, 2));
+} catch (failure) {
+  mkdirSync('verification', { recursive: true });
+  writeFileSync('verification/render-race-failure.json', JSON.stringify({ passed: checks.length, checks, error: String(failure) }, null, 2));
+  throw failure;
 } finally {
   for (const client of clients) client.socket.close();
 }
