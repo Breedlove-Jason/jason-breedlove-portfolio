@@ -1,0 +1,58 @@
+name: KeyForge persistent storage checks
+on:
+  push:
+    branches: [feature/keyforge-typing]
+    paths: ['.github/workflows/keyforge-storage-check.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect-persistent-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check actual deployed storage and public routes
+        env:
+          KEYFORGE_BASE_URL: https://keyforge-va3d.onrender.com
+        run: |
+          mkdir -p verification
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { writeFileSync } from 'node:fs';
+          const base = process.env.KEYFORGE_BASE_URL;
+          const observations = [];
+          let health;
+          for (let attempt = 0; attempt < 40; attempt++) {
+            try {
+              const response = await fetch(base + '/healthz', { signal: AbortSignal.timeout(10000), cache: 'no-store' });
+              const data = response.ok ? await response.json() : { httpStatus: response.status };
+              observations.push({ checkedAt: new Date().toISOString(), ...data });
+              if (data.status === 'ok' && data.storage === 'persistent') { health = data; break; }
+            } catch (error) {
+              observations.push({ checkedAt: new Date().toISOString(), error: error.message });
+            }
+            await new Promise(resolve => setTimeout(resolve, 10000));
+          }
+          writeFileSync('verification/storage-observations.json', JSON.stringify(observations, null, 2));
+          assert(health, 'The actual service did not report a persistent disk');
+          assert.equal(health.transport, 'single-port');
+          assert.equal(health.accountsEnabled, false);
+          const routes = [];
+          for (const path of ['/', '/typing-test', '/profile', '/code-lab', '/code-lab/index.html', '/multiplayer']) {
+            const response = await fetch(base + path, { signal: AbortSignal.timeout(20000) });
+            routes.push({ path, status: response.status });
+            assert.equal(response.status, 200, path);
+            await response.arrayBuffer();
+          }
+          const report = { checkedAt: new Date().toISOString(), base, health, routes,
+            scope: 'Verifies the live application reports a writable persistent mount and all six routes return HTTP 200. Does not establish account cloud sync, restore readiness, or the custom-domain cutover.' };
+          writeFileSync('verification/persistent-storage-health.json', JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          JS
+      - name: Preserve verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keyforge-persistent-storage-evidence
+          path: verification/
+          retention-days: 7
