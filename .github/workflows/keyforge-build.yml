@@ -24,21 +24,27 @@ jobs:
           package-manager-cache: false
       - name: Reconstruct pinned fork with checked patches
         run: python3 keyforge/setup.py "$RUNNER_TEMP/keyforge-app"
-      - name: Install locked dependencies
-        working-directory: ${{ runner.temp }}/keyforge-app
-        run: npm ci
-      - name: Compile all TypeScript packages
-        working-directory: ${{ runner.temp }}/keyforge-app
-        run: npm run compile
-      - name: Test Code Lab engine
+      - name: Install locked dependencies and record audit
         working-directory: ${{ runner.temp }}/keyforge-app
         run: |
           mkdir -p verification
+          npm ci
+          npm audit --json > verification/audit.json || true
+      - name: Test Code Lab engine
+        working-directory: ${{ runner.temp }}/keyforge-app
+        run: |
           set -o pipefail
           npm run test:code-lab | tee verification/engine-results.txt
+      - name: Compile all TypeScript packages
+        working-directory: ${{ runner.temp }}/keyforge-app
+        run: |
+          set -o pipefail
+          npm run compile 2>&1 | tee verification/compile.log
       - name: Build complete production application
         working-directory: ${{ runner.temp }}/keyforge-app
-        run: npm run build -- --no-stats
+        run: |
+          set -o pipefail
+          npm run build -- --no-stats 2>&1 | tee verification/build.log
       - name: Start safe server and verify native routes
         working-directory: ${{ runner.temp }}/keyforge-app
         env:

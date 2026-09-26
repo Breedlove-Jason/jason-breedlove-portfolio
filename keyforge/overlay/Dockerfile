@@ -1,6 +1,6 @@
 FROM node:26-bookworm-slim
 WORKDIR /app
-RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ git ca-certificates && rm -rf /var/lib/apt/lists/*
 COPY --chown=node:node . .
 RUN HUSKY=0 npm ci && npm run compile && npm run build
 RUN mkdir -p /data && chown node:node /data
