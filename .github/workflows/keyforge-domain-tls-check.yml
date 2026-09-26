@@ -1,0 +1,59 @@
+name: KeyForge custom-domain TLS check
+on:
+  push:
+    branches: [feature/keyforge-typing]
+    paths: ['.github/workflows/keyforge-domain-tls-check.yml']
+  workflow_dispatch:
+permissions: {}
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Inspect public DNS, verified TLS and HTTP responses
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import concurrent.futures
+          import datetime
+          import json
+          import socket
+          import ssl
+          import subprocess
+          import urllib.error
+          import urllib.request
+          report = {'checkedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'dns': [], 'hosts': []}
+          for resolver in ['1.1.1.1', '8.8.8.8', 'ns01.squarespacedns.com', 'dns1.p04.nsone.net']:
+              for host, types in [('jasonbreedlove.io', ['A', 'AAAA', 'CAA']), ('www.jasonbreedlove.io', ['CNAME', 'AAAA', 'CAA'])]:
+                  for record in types:
+                      result = subprocess.run(['dig', '+time=2', '+tries=1', '+noall', '+answer', '+comments', '@' + resolver, host, record], capture_output=True, text=True, timeout=6)
+                      report['dns'].append({'resolver': resolver, 'host': host, 'type': record, 'answer': result.stdout.strip(), 'error': result.stderr.strip()})
+          result = subprocess.run(['dig', '+time=2', '+tries=1', '+noall', '+answer', '+comments', '@1.1.1.1', 'jas0nbreedlove.io', 'A'], capture_output=True, text=True, timeout=6)
+          report['zeroSpellingDns'] = result.stdout.strip()
+          def probe(host):
+              result = {'host': host}
+              try:
+                  with socket.create_connection((host, 443), timeout=12) as raw:
+                      with ssl.create_default_context().wrap_socket(raw, server_hostname=host) as conn:
+                          cert = conn.getpeercert()
+                          result['tls'] = {'verified': True, 'peer': conn.getpeername()[0], 'issuer': cert.get('issuer'), 'subjectAltName': cert.get('subjectAltName'), 'notBefore': cert.get('notBefore'), 'notAfter': cert.get('notAfter')}
+              except Exception as error:
+                  result['tls'] = {'verified': False, 'error': str(error)}
+              result['http'] = []
+              for path in ['/', '/healthz']:
+                  url = 'https://' + host + path
+                  try:
+                      request = urllib.request.Request(url, headers={'User-Agent': 'KeyForge-domain-verification/1.0'})
+                      with urllib.request.urlopen(request, timeout=15) as response:
+                          text = response.read(2048).decode('utf-8', 'replace')
+                          result['http'].append({'path': path, 'status': response.status, 'finalUrl': response.url, 'body': text if path == '/healthz' else text[:300]})
+                  except urllib.error.HTTPError as error:
+                      result['http'].append({'path': path, 'status': error.code, 'body': error.read(300).decode('utf-8', 'replace')})
+                  except Exception as error:
+                      result['http'].append({'path': path, 'error': str(error)})
+              return result
+          with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+              report['hosts'] = list(pool.map(probe, ['jasonbreedlove.io', 'www.jasonbreedlove.io', 'keyforge-va3d.onrender.com']))
+          print(json.dumps(report, indent=2))
+          print('Read-only diagnostics: no DNS, certificates, service settings, Netlify content, or portfolio production changes.')
+          PY
