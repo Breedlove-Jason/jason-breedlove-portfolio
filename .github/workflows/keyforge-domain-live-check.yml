@@ -1,0 +1,96 @@
+name: KeyForge io application check
+on:
+  push:
+    branches: [feature/keyforge-typing]
+    paths: ['.github/workflows/keyforge-domain-live-check.yml']
+  workflow_dispatch:
+permissions: {}
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Verify public application, storage and TLS without bypasses
+        shell: bash
+        run: |
+          mkdir -p verification
+          python3 - <<'PY'
+          import base64
+          import datetime
+          import hashlib
+          import http.client
+          import json
+          import os
+          from pathlib import Path
+          import socket
+          import ssl
+          import time
+          import urllib.error
+          import urllib.request
+          BASE = 'https://jasonbreedlove.io'
+          result = {'checkedAt': None, 'base': BASE, 'routes': [], 'tls': [], 'websocket': None}
+          def request(path):
+              req = urllib.request.Request(BASE + path, headers={'User-Agent': 'KeyForge-launch-check/1.0'})
+              with urllib.request.urlopen(req, timeout=10) as response:
+                  return response.status, response.url, response.read(2048).decode('utf-8', 'replace')
+          def cert(host):
+              try:
+                  with socket.create_connection((host, 443), timeout=10) as raw:
+                      with ssl.create_default_context().wrap_socket(raw, server_hostname=host) as conn:
+                          c = conn.getpeercert()
+                          return {'host': host, 'verified': True, 'issuer': c.get('issuer'), 'names': c.get('subjectAltName'), 'expires': c.get('notAfter')}
+              except Exception as exc:
+                  return {'host': host, 'verified': False, 'error': str(exc)}
+          try:
+              deadline = time.monotonic() + 300
+              last_error = ''
+              while time.monotonic() < deadline:
+                  try:
+                      _, _, body = request('/healthz')
+                      health = json.loads(body)
+                      status, _, _ = request('/')
+                      if status == 200 and health.get('storage') == 'persistent' and health.get('revision') == '4380cf2a15a7':
+                          result['health'] = health
+                          break
+                  except Exception as exc:
+                      last_error = str(exc)
+                  time.sleep(5)
+              else:
+                  raise AssertionError('Configured revision did not become ready: ' + last_error)
+              for path in ['/', '/typing-test', '/profile', '/code-lab', '/code-lab/index.html', '/multiplayer', '/healthz']:
+                  status, url, _ = request(path)
+                  assert status == 200, (path, status)
+                  result['routes'].append({'path': path, 'status': status, 'finalUrl': url})
+              result['tls'] = [cert(host) for host in ['jasonbreedlove.io', 'www.jasonbreedlove.io']]
+              assert result['tls'][0]['verified'], 'Root TLS verification failed'
+              try:
+                  with urllib.request.urlopen('https://www.jasonbreedlove.io/', timeout=10) as response:
+                      result['www'] = {'status': response.status, 'finalUrl': response.url}
+              except Exception as exc:
+                  result['www'] = {'error': str(exc)}
+              key = base64.b64encode(os.urandom(16)).decode()
+              connection = http.client.HTTPSConnection('jasonbreedlove.io', timeout=15, context=ssl.create_default_context())
+              connection.request('GET', '/_/game/server', headers={'Connection': 'Upgrade', 'Upgrade': 'websocket', 'Sec-WebSocket-Key': key, 'Sec-WebSocket-Version': '13', 'Origin': BASE})
+              response = connection.getresponse()
+              expected = base64.b64encode(hashlib.sha1((key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11').encode()).digest()).decode()
+              assert response.status == 101, response.status
+              assert response.getheader('Sec-WebSocket-Accept') == expected
+              connection.close()
+              result['websocket'] = {'status': 101, 'origin': BASE, 'acceptVerified': True}
+              result['rootPassed'] = True
+          except Exception as exc:
+              result['rootPassed'] = False
+              result['error'] = str(exc)
+              raise
+          finally:
+              result['checkedAt'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+              Path('verification/io-domain.json').write_text(json.dumps(result, indent=2))
+              print(json.dumps(result, indent=2))
+          PY
+      - name: Preserve exact verification results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keyforge-io-domain-verification
+          path: verification/io-domain.json
+          retention-days: 7
