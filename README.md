@@ -12,7 +12,7 @@ cp .env.example .env
 pnpm dev
 ```
 
-- Website: `http://127.0.0.1:5173`
+- Website: `http://127.0.0.1:5173` (or the forwarded Codespaces port)
 - API: `http://127.0.0.1:3001`
 - The Vite development server proxies `/api` to the Express server.
 
