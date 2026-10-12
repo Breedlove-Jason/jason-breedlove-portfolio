@@ -1,5 +1,6 @@
 import Header from './components/Header.tsx';
 import Hero from './components/Hero.tsx';
+import ProfileHighlights from './components/ProfileHighlights.tsx';
 import Projects from './components/Projects.tsx';
 import Expertise from './components/Expertise.tsx';
 import Experience from './components/Experience.tsx';
@@ -24,10 +25,11 @@ export default function App() {
             <span>AUBURN, CALIFORNIA</span>
           </div>
         </div>
-        <Projects />
+        <ProfileHighlights />
         <Expertise />
         <Experience />
         <About />
+        <Projects />
         <Contact />
       </main>
       <footer className="shell site-footer">

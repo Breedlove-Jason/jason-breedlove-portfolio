@@ -5,8 +5,8 @@ import { randomUUID } from 'node:crypto';
 import type { ContactFields } from '../shared/contact.js';
 
 export interface ContactStore {
-  save(data: ContactFields): string;
-  close(): void;
+  save(data: ContactFields): string | Promise<string>;
+  close(): void | Promise<void>;
 }
 
 export function createStore(filename = './data/contact.sqlite'): ContactStore {

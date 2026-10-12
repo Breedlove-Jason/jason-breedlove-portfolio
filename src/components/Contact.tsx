@@ -124,9 +124,9 @@ export default function Contact() {
           </p>
           <a
             className="contact-email"
-            href="mailto:jbreedlove@jasonbreedlove.dev"
+            href="mailto:jason@jasonbreedlove.dev"
           >
-            jbreedlove@jasonbreedlove.dev{' '}
+            jason@jasonbreedlove.dev{' '}
             <ArrowUpRight size={20} aria-hidden="true" />
           </a>
           <div className="contact-facts">
@@ -136,11 +136,7 @@ export default function Contact() {
             </a>
             <address>
               <MapPin size={17} aria-hidden="true" />
-              <span>
-                1260 Harmony Lane
-                <br />
-                Auburn, CA 95603
-              </span>
+              <span>Auburn, California</span>
             </address>
             <a
               href="https://github.com/Breedlove-Jason"

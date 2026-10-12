@@ -29,11 +29,11 @@ export default function Hero() {
             Download résumé <Download size={17} aria-hidden="true" />
           </a>
         </div>
-        <a className="hero-scroll" href="#projects">
+        <a className="hero-scroll" href="#highlights">
           <span>
             <ArrowDown size={17} aria-hidden="true" />
           </span>{' '}
-          THE WORK SPEAKS FIRST
+          THE FOUNDATION BEHIND THE WORK
         </a>
       </div>
       <SystemConstellation />

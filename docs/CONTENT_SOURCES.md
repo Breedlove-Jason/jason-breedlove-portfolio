@@ -18,13 +18,6 @@ Reviewed September 11, 2026. Repository documents were used as factual source ma
 - Existing task **Build Custom Linux Platform**: guided capture, teleprompter, non-destructive editing, finished masters, Android delivery limitations, and the development-only status of MemoryBeam OS “First Light.”
 - The repository is private. The website summarizes engineering at a high level and does not link to inaccessible code or claim a shipped device.
 
-### American Legion Post 84
-
-- GitHub repository `Breedlove-Jason/american-legion-post84`, `package.json` at blob `cd75f2a2a7396a10a9cd7ec35fc2b69381a58645`: Next.js, TypeScript, Prisma, PostgreSQL adapter, Stripe, notification dependencies.
-- Its README documents checkout, server integrations, and notification configuration.
-- Existing local `web-dev-portfolio/src/data/projects.ts`: members, officers, events, CMS, dues/donations/payment workflows, and in-development status.
-- No production rollout or business outcome is claimed. Private source is not exposed.
-
 ### CryptoForge
 
 - GitHub `Breedlove-Jason/crypto_forge/README.md`, blob `32563c74ac956609e24ddd1d021714ea33a443cb`: modular data/features/models/research architecture, LightGBM and XGBoost, probability calibration, walk-forward validation, normalized schemas, SHA-256 manifests, provider budgets, and offline fixture runs.
@@ -51,3 +44,16 @@ The React, Next.js, TypeScript, React Native, Express, PostgreSQL, MongoDB, Dock
 The “Connected by Curiosity” globe includes TypeScript, JavaScript, Python, Java, SQL, React, MongoDB, Flask, and Django as languages, frameworks, and databases worked with or studied. The user requested React, MongoDB, Flask, and Django and removed Swift, Kotlin, and C# because of limited use. The list does not assign proficiency ratings or imply equal experience across technologies; HTML/CSS, Linux, and security concepts remain in the technical-focus captions.
 
 The AI-assisted workflow statement is drawn from the existing local portfolio’s `src/data/workflow.ts`. It describes review and ownership, without claiming sole manual authorship of every line in AI-assisted projects.
+
+## Relay Chat — September 20, 2026
+
+- Source: https://github.com/Breedlove-Jason/realtime-chat-app, including authenticated Socket.IO, MongoDB message persistence, Cloudinary uploads, and the React guest preview.
+- Deployment: https://chat.jasonbreedlove.dev on Render; custom-domain operation confirmed by the project owner.
+- Descriptions reflect the implemented single-instance demo. No end-to-end encryption or production-scale availability is claimed.
+
+## Ledger — September 21, 2026
+
+- Rebuilt the public `react-expense-tracker` repository, preserving its Git history and crediting the original Expense Manager, Investment Calculator, and Calculator App projects.
+- Live at https://ledger.jasonbreedlove.dev/ on Vercel.
+- Eight automated core tests and production build pass. Hosted transaction create/edit/delete, reload persistence, budget persistence, calculator-to-expense transfer, zero-return projection and backup download were verified. Backup JSON was inspected successfully; a browser file-picker timeout prevented end-to-end restore verification.
+- Browser-local storage only; no cloud sync, bank integration or investment-performance promise.
