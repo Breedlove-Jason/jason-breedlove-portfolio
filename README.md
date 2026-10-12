@@ -38,6 +38,8 @@ pnpm dev
 
 The frontend runs at http://127.0.0.1:5173 (or the forwarded Codespaces port) and proxies API requests to port 3001. The store uses the `portfolio.contact_messages` collection. Use a separate development cluster or credentials; do not run development against personal production messages.
 
+When running in Codespaces, the API automatically allows the forwarded HTTPS frontend origin derived from `CODESPACE_NAME`. Set `CODESPACE_ORIGIN` explicitly if your environment uses a custom forwarding hostname.
+
 ```sh
 pnpm typecheck
 pnpm test
